@@ -1,4 +1,7 @@
-# Project information
-    - eLibrary
-    - Project Description
-    - Eero Kaarnalehto, Ville Ollila, Tuomo Aaltonen, Perttu Hakala
+# Project Information
+
+| First Header       | Second Header                               |
+| ------------------ | ------------------------------------------- |
+| Project Name              | eLibrary |
+| Description        |                           |
+| Team | Eero Kaarnalehto, Tuomo Aaltonen, Perttu Hakala, Ville Ollila                                |
