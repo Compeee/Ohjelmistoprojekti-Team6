@@ -3,5 +3,5 @@
 | First Header       | Second Header                               |
 | ------------------ | ------------------------------------------- |
 | Project Name              | eLibrary |
-| Description        |                           |
+| Description        |  Working online library with all of its core functions                         |
 | Team | Eero Kaarnalehto, Tuomo Aaltonen, Perttu Hakala, Ville Ollila                                |
