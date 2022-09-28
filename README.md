@@ -1,6 +1,6 @@
 # Project Information
 
-|       |                 |
+|    First header  |    Second header             |
 | ------------------ | ------------------------------------------- |
 | Project Name              | eLibrary |
 | Description        |  Working online library with all of its core functions                         |
