@@ -1,4 +1,4 @@
-package com.example.springbootlearning.book;
+package com.example.libraryapp.book;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package com.example.springbootlearning.book;
+package com.example.libraryapp.book;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

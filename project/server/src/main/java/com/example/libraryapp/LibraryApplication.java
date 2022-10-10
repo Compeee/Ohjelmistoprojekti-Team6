@@ -1,4 +1,4 @@
-package com.example.springbootlearning;
+package com.example.libraryapp;
 
 import java.util.List;
 
@@ -7,14 +7,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.springbootlearning.book.Book;
+import com.example.libraryapp.book.Book;
 
 @SpringBootApplication
 @RestController
-public class SpringBootLearningApplication {
+public class LibraryApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootLearningApplication.class, args);
+		SpringApplication.run(LibraryApplication.class, args);
 	}
 
 	@GetMapping
