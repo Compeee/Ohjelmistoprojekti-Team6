@@ -18,16 +18,16 @@ public class Book {
     private Long id;
     private String title;
     private String author;
-    private int year;
+    private Integer year;
     private String description;
     private String genre;
-    private boolean on_loan;
+    private Boolean on_loan;
 
     public Book() {
 
     }
 
-    public Book(Long id, String title, String author, int year, String description, String genre, boolean on_loan){
+    public Book(Long id, String title, String author, Integer year, String description, String genre, Boolean on_loan) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -36,7 +36,8 @@ public class Book {
         this.genre = genre;
         this.on_loan = on_loan;
     }
-    public Book(String title, String author, int year, String description, String genre, boolean on_loan){
+
+    public Book(String title, String author, Integer year, String description, String genre, Boolean on_loan) {
         this.title = title;
         this.author = author;
         this.year = year;
@@ -69,11 +70,11 @@ public class Book {
         this.author = author;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 
@@ -93,11 +94,11 @@ public class Book {
         this.genre = genre;
     }
 
-    public boolean isOn_loan() {
+    public Boolean isOn_loan() {
         return on_loan;
     }
 
-    public void setOn_loan(boolean on_loan) {
+    public void setOn_loan(Boolean on_loan) {
         this.on_loan = on_loan;
     }
 
