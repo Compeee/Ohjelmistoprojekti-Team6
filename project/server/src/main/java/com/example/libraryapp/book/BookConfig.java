@@ -11,8 +11,8 @@ public class BookConfig {
     @Bean
     CommandLineRunner commandLineRunner(BookRepository repository) {
         return args -> {
-            Book book1 = new Book("book", "Eero", 1999, "great book", "poetry", false);
-            Book book2 = new Book("book2", "Eero", 1999, "great book", "poetry", false);
+            Book book1 = new Book("book", "Eero", 1999, "great book", "poetry", false, "imglink");
+            Book book2 = new Book("book2", "Eero", 1999, "great book", "poetry", false, "imglink");
             repository.saveAll(List.of(book1, book2));
         };
     }

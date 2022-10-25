@@ -28,8 +28,12 @@ public class BookService {
     public void deleteBook(Long bookId) {
         boolean exists = bookRepository.existsById(bookId);
         if (!exists) {
-            throw new IllegalStateException("Book with id " + bookId + "doesnt exist!");
+            throw new IllegalStateException("Book with id " + bookId + "doesn't exist!");
         }
         bookRepository.deleteById(bookId);
+    }
+
+    public List<Book> getBooksByGenre(String genre) {
+        return bookRepository.findAllByGenre(genre);
     }
 }
