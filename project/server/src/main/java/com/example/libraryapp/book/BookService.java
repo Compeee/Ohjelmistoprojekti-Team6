@@ -1,7 +1,9 @@
 package com.example.libraryapp.book;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.example.libraryapp.libraryUser.LibraryUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,13 @@ public class BookService {
         bookRepository.save(book);
         System.out.println(book);
     }
-
+    public Optional<Book> findBookById(Long bookId) {
+        boolean exists = bookRepository.existsById(bookId);
+        if (!exists) {
+            throw new IllegalStateException("Book with id " + bookId + "doesn't exist!");
+        }
+        return bookRepository.findById(bookId);
+    }
     public void deleteBook(Long bookId) {
         boolean exists = bookRepository.existsById(bookId);
         if (!exists) {

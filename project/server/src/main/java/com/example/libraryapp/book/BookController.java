@@ -1,6 +1,7 @@
 package com.example.libraryapp.book;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +31,11 @@ public class BookController {
     @PostMapping
     public void addBook(@RequestBody Book book) {
         bookService.addNewBook(book);
+    }
+
+    @GetMapping("/{bookId}")
+    public Optional<Book> getBookById(@PathVariable Long bookId){
+        return bookService.findBookById(bookId);
     }
 
     @DeleteMapping(path = "{bookId}")

@@ -1,3 +1,55 @@
 {
-  "cSpell.words": ["libraryapp"]
+  "cSpell.words": ["libraryapp"],
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "library",
+      "username": "user",
+      "database": "library",
+      "password": "pass"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "library",
+      "database": "library",
+      "username": "user",
+      "password": "pass"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "library",
+      "database": "library",
+      "username": "user",
+      "password": "pass"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "library",
+      "username": "user",
+      "database": "library",
+      "password": "pass"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "askForPassword": true,
+      "driver": "PostgreSQL",
+      "name": "library",
+      "database": "library",
+      "username": "user"
+    }
+  ]
 }
