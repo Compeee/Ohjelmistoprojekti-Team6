@@ -1,11 +1,8 @@
 package com.example.libraryapp.book;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import com.example.libraryapp.loan.Loan;
+
+import javax.persistence.*;
 
 @Entity
 @Table
@@ -23,6 +20,9 @@ public class Book {
     private String genre;
     private Boolean on_loan;
     private String image;
+
+    @OneToOne(mappedBy = "book")
+    private Loan loan;
 
     public Book() {
 
