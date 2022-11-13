@@ -1,10 +1,10 @@
 package com.example.libraryapp.loan;
 
+import com.example.libraryapp.book.Book;
+import com.example.libraryapp.book.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,17 +21,35 @@ public class LoanService {
        return loanRepository.findAll();
     }
     public void createLoan(Loan loan){
+        // loan.getBook().setOn_loan(true);
         loanRepository.save(loan);
         System.out.println(loan);
     }
 
+    public Optional<Loan> getLoanById(Long loan_id){
+        return loanRepository.findById(loan_id);
+    }
     public List<Loan> findLoansByUserId(Long user_id) {
         return loanRepository.findAllByUserId(user_id);
     }
-    public void extendLoan(Long loanId) {
-        Loan loan = loanRepository.findById(loanId).orElseThrow();
-        loan.setEndDate(LocalDate.of(2023, 1, 13));
+    public void extendLoan(Long loan_id) {
+        Loan loan = loanRepository.findById(loan_id).orElseThrow();
+        loan.setEndDate(loan.getEndDate().plusMonths(1));
         loanRepository.save(loan);
         System.out.println(loan);
+    }
+
+    public void deleteLoan(Long loan_id) {
+        loanRepository.deleteById(loan_id);
+
+        Optional<Loan> loan = loanRepository.findById(loan_id);
+        if(loan.isPresent()){
+            Loan loan1 = loan.get();
+            Book book = loan1.getBook();
+            book.setOn_loan(false);
+            loan1.setBook(book);
+            loanRepository.save(loan1);
+        }
+
     }
 }

@@ -3,7 +3,6 @@ package com.example.libraryapp.book;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.libraryapp.libraryUser.LibraryUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +39,7 @@ public class BookService {
         }
         bookRepository.deleteById(bookId);
     }
+
 
     public List<Book> getBooksByGenre(String genre) {
         return bookRepository.findAllByGenre(genre);
