@@ -21,7 +21,7 @@ public class LoanService {
        return loanRepository.findAll();
     }
     public void createLoan(Loan loan){
-        // loan.getBook().setOn_loan(true);
+        loan.getBook().setOn_loan(true);
         loanRepository.save(loan);
         System.out.println(loan);
     }
@@ -40,8 +40,6 @@ public class LoanService {
     }
 
     public void deleteLoan(Long loan_id) {
-        loanRepository.deleteById(loan_id);
-
         Optional<Loan> loan = loanRepository.findById(loan_id);
         if(loan.isPresent()){
             Loan loan1 = loan.get();
@@ -50,6 +48,7 @@ public class LoanService {
             loan1.setBook(book);
             loanRepository.save(loan1);
         }
+        loanRepository.deleteById(loan_id);
 
     }
 }

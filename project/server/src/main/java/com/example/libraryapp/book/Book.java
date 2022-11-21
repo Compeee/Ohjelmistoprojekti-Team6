@@ -1,9 +1,16 @@
 package com.example.libraryapp.book;
 
 import com.example.libraryapp.loan.Loan;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table
 public class Book {
@@ -21,23 +28,11 @@ public class Book {
     private Boolean on_loan;
     private String image;
 
+    /*
     @OneToOne(mappedBy = "book")
     private Loan loan;
 
-    public Book() {
-
-    }
-
-    public Book(Long id, String title, String author, Integer year, String description, String genre, Boolean on_loan, String image) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.year = year;
-        this.description = description;
-        this.genre = genre;
-        this.on_loan = on_loan;
-        this.image = image;
-    }
+     */
 
     public Book(String title, String author, Integer year, String description, String genre, Boolean on_loan, String image) {
         this.title = title;
@@ -49,79 +44,4 @@ public class Book {
         this.image = image;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public Boolean isOn_loan() {
-        return on_loan;
-    }
-
-    public void setOn_loan(Boolean on_loan) {
-        this.on_loan = on_loan;
-    }
-
-    public String getImage(){
-        return image;
-    }
-    public void setImage(String image){
-        this.image = image;
-    }
-
-    @java.lang.Override
-    public java.lang.String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", year=" + year +
-                ", description='" + description + '\'' +
-                ", genre='" + genre + '\'' +
-                ", on_loan=" + on_loan +
-                '}';
-    }
 }

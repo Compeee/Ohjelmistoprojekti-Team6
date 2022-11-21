@@ -4,54 +4,35 @@ import javax.persistence.*;
 
 import com.example.libraryapp.book.Book;
 import com.example.libraryapp.libraryUser.LibraryUser;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 
-
+@AllArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table
+@NoArgsConstructor
 public class Loan {
     @Id
     @SequenceGenerator(name = "loan_sequence", sequenceName = "loan_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loan_sequence")
     private Long id;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name = "book_id", referencedColumnName = "id")
     private Book book;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private LibraryUser libraryUser;
 
     private LocalDate startDate;
 
     private LocalDate endDate;
-
-
-    public Loan() {
-
-    }
-
-    public Loan(Long id, Book book, LibraryUser libraryUser, LocalDate startDate, LocalDate endDate){
-        this.id = id;
-        this.book = book;
-        this.libraryUser = libraryUser;
-        this.startDate = startDate;
-        this.endDate = endDate;
-
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
@@ -62,30 +43,6 @@ public class Loan {
         this.libraryUser = libraryUser;
         this.startDate = startDate;
         this.endDate = endDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    public LibraryUser getLibraryUser() {
-        return libraryUser;
-    }
-
-    public void setLibraryUser(LibraryUser libraryUser) {
-        this.libraryUser = libraryUser;
     }
 
 }

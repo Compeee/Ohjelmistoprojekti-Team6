@@ -11,13 +11,9 @@ import java.util.Optional;
 @RequestMapping(path = "api/v1/loan")
 public class LoanController {
     private final LoanService loanService;
-    private BookRepository bookRepository;
-    private LibraryUserRepository libraryUserRepository;
 
-    public LoanController(LoanService loanService, BookRepository bookRepository, LibraryUserRepository libraryUserRepository) {
+    public LoanController(LoanService loanService) {
         this.loanService = loanService;
-        this.bookRepository = bookRepository;
-        this.libraryUserRepository = libraryUserRepository;
     }
 
     @GetMapping("/{user_id}")

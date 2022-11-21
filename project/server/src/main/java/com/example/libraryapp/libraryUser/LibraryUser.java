@@ -1,13 +1,25 @@
 package com.example.libraryapp.libraryUser;
 
 import com.example.libraryapp.loan.Loan;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.Instant;
-
+import java.util.Collection;
+import java.util.Collections;
+@Getter
+@Setter
+@EqualsAndHashCode
+@NoArgsConstructor
 @Entity
 @Table
-public class LibraryUser {
+public class LibraryUser implements UserDetails{
 
     @Id
     @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
@@ -17,93 +29,66 @@ public class LibraryUser {
     private String username;
     private String email;
     private String password;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private LibraryUserRole role;
+
+    private Boolean locked = false;
+
+    private Boolean enabled = true;
     private Instant timestamp;
 
+    /*
     @OneToOne(mappedBy = "libraryUser")
     private Loan loan;
 
-    public LibraryUser(){
+     */
 
-    }
-
-    public LibraryUser(Long id, String username, String email, String password, String role, Instant timestamp){
-        this.id=id;
-        this.username=username;
-        this.email=email;
-        this.password=password;
-        this.role=role;
-        this.timestamp=timestamp;
-    }
-
-    public LibraryUser(String username, String email, String password, String role, Instant timestamp){
-        this.username=username;
-        this.email=email;
-        this.password=password;
-        this.role=role;
-        this.timestamp=timestamp;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
+    public LibraryUser(String username, String email, String password, LibraryUserRole role, Instant timestamp) {
         this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.timestamp = timestamp;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority authority =
+                new SimpleGrantedAuthority(role.name());
+        return Collections.singletonList(authority);
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public String getPassword() {
-        return password;
+    @Override
+    public boolean isAccountNonLocked() {
+        return !locked;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public String getRole() {
-        return role;
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public Instant getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Instant timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    @java.lang.Override
-    public java.lang.String toString() {
-        return "user{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password=" + password +
-                ", role='" + role + '\'' +
-                ", timestamp='" + timestamp + '\'' +
-                '}';
-    }
-
-
 }
