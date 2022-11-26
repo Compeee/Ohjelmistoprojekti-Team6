@@ -2,8 +2,10 @@ package com.example.libraryapp.loan;
 
 import com.example.libraryapp.book.BookRepository;
 import com.example.libraryapp.libraryUser.LibraryUserRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +18,7 @@ public class LoanController {
         this.loanService = loanService;
     }
 
-    @GetMapping("/{user_id}")
+    @GetMapping("/{userId}")
     public List<Loan> getLoansByUserId(@PathVariable Long user_id){
         return loanService.findLoansByUserId(user_id);
     }

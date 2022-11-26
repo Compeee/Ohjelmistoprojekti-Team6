@@ -54,6 +54,7 @@ public class LibraryUserService implements UserDetailsService {
             throws UsernameNotFoundException {
         return libraryUserRepository.findByEmail(email)
                 .orElseThrow(() ->
-                        new UsernameNotFoundException("user not found by username"));
+                        new UsernameNotFoundException("user not found by email"));
     }
+
 }

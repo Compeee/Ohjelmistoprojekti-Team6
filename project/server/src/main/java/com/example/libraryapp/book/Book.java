@@ -1,6 +1,7 @@
 package com.example.libraryapp.book;
 
 import com.example.libraryapp.loan.Loan;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,12 +29,6 @@ public class Book {
     private Boolean on_loan;
     private String image;
 
-    /*
-    @OneToOne(mappedBy = "book")
-    private Loan loan;
-
-     */
-
     public Book(String title, String author, Integer year, String description, String genre, Boolean on_loan, String image) {
         this.title = title;
         this.author = author;
@@ -43,5 +38,6 @@ public class Book {
         this.on_loan = on_loan;
         this.image = image;
     }
+
 
 }

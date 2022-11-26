@@ -1,7 +1,6 @@
 package com.example.libraryapp.libraryUser;
 
 
-import com.example.libraryapp.security.PasswordEncoder;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

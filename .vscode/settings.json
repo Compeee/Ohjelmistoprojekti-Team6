@@ -50,6 +50,16 @@
       "name": "library",
       "database": "library",
       "username": "user"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "library",
+      "database": "library",
+      "username": "user",
+      "password": "pass"
     }
   ]
 }

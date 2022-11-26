@@ -1,6 +1,7 @@
 package com.example.libraryapp.libraryUser;
 
 import com.example.libraryapp.loan.Loan;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,8 @@ import javax.persistence.*;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -32,16 +35,11 @@ public class LibraryUser implements UserDetails{
     @Enumerated(EnumType.STRING)
     private LibraryUserRole role;
 
+
     private Boolean locked = false;
 
     private Boolean enabled = true;
     private Instant timestamp;
-
-    /*
-    @OneToOne(mappedBy = "libraryUser")
-    private Loan loan;
-
-     */
 
     public LibraryUser(String username, String email, String password, LibraryUserRole role, Instant timestamp) {
         this.username = username;
@@ -50,7 +48,6 @@ public class LibraryUser implements UserDetails{
         this.role = role;
         this.timestamp = timestamp;
     }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority =
@@ -65,7 +62,7 @@ public class LibraryUser implements UserDetails{
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     public String getEmail() {

@@ -4,12 +4,14 @@ import javax.persistence.*;
 
 import com.example.libraryapp.book.Book;
 import com.example.libraryapp.libraryUser.LibraryUser;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -23,11 +25,11 @@ public class Loan {
     @SequenceGenerator(name = "loan_sequence", sequenceName = "loan_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loan_sequence")
     private Long id;
-    @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_book", referencedColumnName = "id")
     private Book book;
-    @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_user", referencedColumnName = "id")
     private LibraryUser libraryUser;
 
     private LocalDate startDate;
@@ -44,5 +46,5 @@ public class Loan {
         this.startDate = startDate;
         this.endDate = endDate;
     }
-
+    
 }

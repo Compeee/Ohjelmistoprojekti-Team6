@@ -11,5 +11,4 @@ import java.util.List;
 public interface LoanRepository extends JpaRepository<Loan, Long> {
     @Query(value = "Select * from loan ln where ln.user_id = ?1", nativeQuery = true)
     List<Loan> findAllByUserId(@Param("userId")Long userId);
-
 }

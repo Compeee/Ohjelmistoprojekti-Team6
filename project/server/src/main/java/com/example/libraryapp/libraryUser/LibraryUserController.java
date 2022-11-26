@@ -1,4 +1,5 @@
 package com.example.libraryapp.libraryUser;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -6,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,6 +28,12 @@ public class LibraryUserController {
         return libraryUserService.findUserById(userId);
     }
 
+    @PreAuthorize("#userId == authentication.principal.id")
+    @PutMapping("/{userId}")
+    public UserDetails updateUserDetails(@PathVariable Long userId, Principal principal){
+        //libraryUserService.updateUser(userId);
+        return null;
+    }
 
     @DeleteMapping(path = "/{userId}")
     public void deleteUser(@PathVariable("userId") Long userId) {

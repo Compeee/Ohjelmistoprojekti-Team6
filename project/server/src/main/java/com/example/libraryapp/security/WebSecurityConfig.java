@@ -1,9 +1,11 @@
 package com.example.libraryapp.security;
 
+import com.example.libraryapp.libraryUser.LibraryUserRole;
 import com.example.libraryapp.libraryUser.LibraryUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -28,11 +30,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v*/register/**")
-                .permitAll()
+                .antMatchers("/api/v*/register/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v*/book").permitAll()
+                .antMatchers(HttpMethod.DELETE,"/api/v*/book").hasAuthority(LibraryUserRole.ADMIN.name())
+                .antMatchers(HttpMethod.POST,"/api/v*/book").hasAuthority(LibraryUserRole.ADMIN.name())
+                .antMatchers(HttpMethod.DELETE, "/api/v*/loan").hasAnyAuthority(LibraryUserRole.ADMIN.name(), LibraryUserRole.USER.name())
+                .antMatchers(HttpMethod.POST, "/api/v*/loan").hasAnyAuthority(LibraryUserRole.ADMIN.name(), LibraryUserRole.USER.name())
                 .anyRequest()
-                .authenticated().and()
-                .formLogin();
+                .authenticated()
+                .and()
+                .httpBasic();
     }
 
     @Override
