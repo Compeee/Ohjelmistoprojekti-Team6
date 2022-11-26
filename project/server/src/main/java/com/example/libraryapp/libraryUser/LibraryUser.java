@@ -1,7 +1,6 @@
 package com.example.libraryapp.libraryUser;
 
 import com.example.libraryapp.loan.Loan;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,8 +33,6 @@ public class LibraryUser implements UserDetails{
     private String password;
     @Enumerated(EnumType.STRING)
     private LibraryUserRole role;
-
-
     private Boolean locked = false;
 
     private Boolean enabled = true;

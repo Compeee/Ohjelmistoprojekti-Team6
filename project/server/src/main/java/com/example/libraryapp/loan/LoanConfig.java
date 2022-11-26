@@ -22,10 +22,8 @@ public class LoanConfig {
     @Bean
     CommandLineRunner commandLineLoanRunner(LoanRepository repository){
         return args -> {
-            Loan loan1 = new Loan(new Book("book", "Eero", 1999, "great book", "poetry", false, "imglink"), new LibraryUser("loanuser1","loanemail1", bCryptPasswordEncoder.encode("loanpass1"), LibraryUserRole.USER, Instant.now()), LocalDate.now(), LocalDate.now().plusMonths(1));
+            Loan loan1 = new Loan(1L, 1L);
             repository.saveAll(List.of(loan1));
-
-
         };
     }
 }

@@ -30,12 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v*/register/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/v*/book").permitAll()
-                .antMatchers(HttpMethod.DELETE,"/api/v*/book").hasAuthority(LibraryUserRole.ADMIN.name())
-                .antMatchers(HttpMethod.POST,"/api/v*/book").hasAuthority(LibraryUserRole.ADMIN.name())
-                .antMatchers(HttpMethod.DELETE, "/api/v*/loan").hasAnyAuthority(LibraryUserRole.ADMIN.name(), LibraryUserRole.USER.name())
-                .antMatchers(HttpMethod.POST, "/api/v*/loan").hasAnyAuthority(LibraryUserRole.ADMIN.name(), LibraryUserRole.USER.name())
+                .antMatchers("/api/v*/register/**", "/login").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

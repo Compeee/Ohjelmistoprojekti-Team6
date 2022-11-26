@@ -8,6 +8,8 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Clock from "../Clock.js";
 
+
+
 function Register() {
   return (
     <div className="App">

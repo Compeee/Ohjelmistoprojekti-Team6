@@ -18,23 +18,19 @@ public class LibraryUserController {
 
     private final LibraryUserService libraryUserService;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public List<LibraryUser> getUsers(){
         return libraryUserService.getUsers();
     }
 
+    @PreAuthorize("#userId == principal.id")
     @GetMapping("/{userId}")
     public Optional<LibraryUser> getUserById(@PathVariable Long userId){
         return libraryUserService.findUserById(userId);
     }
 
-    @PreAuthorize("#userId == authentication.principal.id")
-    @PutMapping("/{userId}")
-    public UserDetails updateUserDetails(@PathVariable Long userId, Principal principal){
-        //libraryUserService.updateUser(userId);
-        return null;
-    }
-
+    @PreAuthorize("#userId == principal.id")
     @DeleteMapping(path = "/{userId}")
     public void deleteUser(@PathVariable("userId") Long userId) {
         libraryUserService.deleteUser(userId);
