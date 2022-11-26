@@ -2,8 +2,10 @@ package com.example.libraryapp.loan;
 
 import com.example.libraryapp.book.BookRepository;
 import com.example.libraryapp.libraryUser.LibraryUserRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,16 +13,12 @@ import java.util.Optional;
 @RequestMapping(path = "api/v1/loan")
 public class LoanController {
     private final LoanService loanService;
-    private BookRepository bookRepository;
-    private LibraryUserRepository libraryUserRepository;
 
-    public LoanController(LoanService loanService, BookRepository bookRepository, LibraryUserRepository libraryUserRepository) {
+    public LoanController(LoanService loanService) {
         this.loanService = loanService;
-        this.bookRepository = bookRepository;
-        this.libraryUserRepository = libraryUserRepository;
     }
 
-    @GetMapping("/{user_id}")
+    @GetMapping("/{userId}")
     public List<Loan> getLoansByUserId(@PathVariable Long user_id){
         return loanService.findLoansByUserId(user_id);
     }
