@@ -8,42 +8,54 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Table from "react-bootstrap/Table";
 import Clock from "../Clock.js";
+import Logout from "../Logout.js";
+import { useContext } from "react";
+import { ThemeContext } from "../ThemeContext.js";
+import { NavLink } from "react-router-dom";
 
 function Books() {
+  const { theme, setTheme } = useContext(ThemeContext);
   return (
     <div className="App">
       <>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar collapseOnSelect expand="lg" bg={theme} variant={theme}>
           <Container fluid="md">
             <Navbar.Brand>Library App</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav activeKey={"/"}>
+                <Nav.Item>
+                  <Nav.Link as={NavLink} to="/users">
+                    Users
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
               <Nav className="me-auto">
-                <Nav.Link href="/home">Home</Nav.Link>
-                <Nav.Link href="/users">Users</Nav.Link>
-                <Nav.Link href="/books">Books</Nav.Link>
                 <NavDropdown title="Theme" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Light</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">Dark</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">
-                    Something
+                  <NavDropdown.Item onClick={() => setTheme("primary")}>
+                    Blue
                   </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Separated link
+                  <NavDropdown.Item onClick={() => setTheme("dark")}>
+                    Dark
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => setTheme("light")}>
+                    Light
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => setTheme("success")}>
+                    Green
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => setTheme("warning")}>
+                    Yellow
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav>
               <Navbar.Text id="status">STATUS</Navbar.Text>
-              <p>" "</p>
               <Nav>
                 <Clock></Clock>
               </Nav>
-              <p>" "</p>
-              <Nav>
-                <Navbar.Text> </Navbar.Text>
-                <Button variant="danger">Log out</Button>{" "}
-              </Nav>
+              <Button variant="danger" onClick={Logout}>
+                Log out
+              </Button>
             </Navbar.Collapse>
           </Container>
         </Navbar>
@@ -64,7 +76,7 @@ function Books() {
             </Button>
           </Form>
           <p> </p>
-          <Table striped bordered hover variant="dark">
+          <Table striped bordered hover bg={theme} variant={theme}>
             <thead>
               <tr>
                 <th>Title</th>
