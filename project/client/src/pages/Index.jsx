@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
@@ -7,38 +7,50 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Card from "react-bootstrap/Card";
-import Placeholder from "react-bootstrap/Placeholder";
 import Clock from "../Clock.js";
+import { ThemeContext } from "../ThemeContext.js";
+import { NavLink } from "react-router-dom";
 
 function Index() {
+  const { theme, setTheme } = useContext(ThemeContext);
   return (
     <div className="App">
       <>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar collapseOnSelect expand="lg" bg={theme} variant={theme}>
           <Container fluid="md">
             <Navbar.Brand>Library App</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav activeKey={"/"}>
+                <Nav.Item>
+                  <Nav.Link as={NavLink} to="/register">
+                    Register
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
               <Nav className="me-auto">
                 <NavDropdown title="Theme" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Light</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">Dark</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">
-                    Something
+                  <NavDropdown.Item onClick={() => setTheme("primary")}>
+                    Blue
                   </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Separated link
+                  <NavDropdown.Item onClick={() => setTheme("dark")}>
+                    Dark
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => setTheme("light")}>
+                    Light
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => setTheme("success")}>
+                    Green
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => setTheme("warning")}>
+                    Yellow
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav>
-              <Nav>
-                <Navbar.Text id="status">STATUS</Navbar.Text>
-              </Nav>
-              <p>" "</p>
-              <Nav>
-                <Clock></Clock>
-              </Nav>
+              <Navbar.Text className="navBarLink" id="status">
+                {theme}
+              </Navbar.Text>
+              <Clock></Clock>
             </Navbar.Collapse>
           </Container>
         </Navbar>
@@ -48,29 +60,28 @@ function Index() {
           <p> </p>
           <div className="d-flex justify-content-around">
             <Card style={{ width: "18rem" }}>
-              <Card.Img variant="top" src="holder.js/100px180" />
               <Card.Body>
-                <Card.Title>Card Title</Card.Title>
+                <Card.Title>Books</Card.Title>
                 <Card.Text>
                   Some quick example text to build on the card title and make up
                   the bulk of the card content.
                 </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
+                <Button bg={theme} variant={theme}>
+                  Go somewhere
+                </Button>
               </Card.Body>
             </Card>
 
             <Card style={{ width: "18rem" }}>
-              <Card.Img variant="top" src="holder.js/100px180" />
               <Card.Body>
-                <Placeholder as={Card.Title} animation="glow">
-                  <Placeholder xs={6} />
-                </Placeholder>
-                <Placeholder as={Card.Text} animation="glow">
-                  <Placeholder xs={7} /> <Placeholder xs={4} />{" "}
-                  <Placeholder xs={4} /> <Placeholder xs={6} />{" "}
-                  <Placeholder xs={8} />
-                </Placeholder>
-                <Placeholder.Button variant="primary" xs={6} />
+                <Card.Title>Loans</Card.Title>
+                <Card.Text>
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card content.
+                </Card.Text>
+                <Button bg={theme} variant={theme}>
+                  Go somewhere
+                </Button>
               </Card.Body>
             </Card>
           </div>
@@ -93,7 +104,7 @@ function Index() {
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Check type="checkbox" label="Remember Login" />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button bg={theme} variant={theme} type="submit">
               Login
             </Button>
             <Form.Text className="text"> </Form.Text>

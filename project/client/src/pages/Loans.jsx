@@ -8,40 +8,49 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Table from "react-bootstrap/Table";
 import Clock from "../Clock.js";
+import Logout from "../Logout.js";
+import { useContext } from "react";
+import { ThemeContext } from "../ThemeContext.js";
 
 function Loans() {
+  const { theme, setTheme } = useContext(ThemeContext);
   return (
     <div className="App">
       <>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar collapseOnSelect expand="lg" bg={theme} variant={theme}>
           <Container fluid="md">
             <Navbar.Brand>Library App</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link href="/home">Home</Nav.Link>
-                <Nav.Link href="/loans">Loans</Nav.Link>
                 <NavDropdown title="Theme" id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Light</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.2">Dark</NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.3">
-                    Something
+                  <NavDropdown.Item onClick={() => setTheme("primary")}>
+                    Blue
                   </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.4">
-                    Separated link
+                  <NavDropdown.Item onClick={() => setTheme("dark")}>
+                    Dark
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => setTheme("light")}>
+                    Light
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => setTheme("success")}>
+                    Green
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => setTheme("warning")}>
+                    Yellow
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav>
-              <Navbar.Text id="status">STATUS</Navbar.Text>
-              <p>" "</p>
               <Nav>
+                <Navbar.Text className="navBarLink" id="status">
+                  {theme}
+                </Navbar.Text>
                 <Clock></Clock>
               </Nav>
-              <p>" "</p>
               <Nav>
-                <Navbar.Text> </Navbar.Text>
-                <Button variant="danger">Log out</Button>{" "}
+                <Button variant="danger" onClick={Logout}>
+                  Log out
+                </Button>
               </Nav>
             </Navbar.Collapse>
           </Container>
@@ -50,7 +59,7 @@ function Loans() {
           <p> </p>
           <h1>Active loans</h1>
           <p> </p>
-          <Table striped bordered hover variant="dark">
+          <Table striped bordered hover variant={theme}>
             <thead>
               <tr>
                 <th>Title</th>
@@ -78,7 +87,7 @@ function Loans() {
                 <td>2022-10-31</td>
                 <td>Pending</td>
                 <td>
-                  <Button variant="primary" type="submit">
+                  <Button bg={"success"} variant={"success"} type="submit">
                     Renew
                   </Button>
                 </td>
@@ -96,7 +105,7 @@ function Loans() {
                 <td>2022-12-15</td>
                 <td>Extended</td>
                 <td>
-                  <Button variant="primary" type="submit">
+                  <Button bg={"success"} variant={"success"} type="submit">
                     Renew
                   </Button>
                 </td>
@@ -114,12 +123,12 @@ function Loans() {
                 Searching instructions/tips here
               </Form.Text>
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button bg={theme} variant={theme} type="submit">
               Search
             </Button>
           </Form>
           <p> </p>
-          <Table striped bordered hover variant="dark">
+          <Table striped bordered hover variant={theme}>
             <thead>
               <tr>
                 <th>Title</th>
@@ -138,7 +147,7 @@ function Loans() {
                 <td>Poliisikirjallisuus</td>
                 <td>Description</td>
                 <td>
-                  <Button variant="primary" type="submit">
+                  <Button bg={"success"} variant={"success"} type="submit">
                     Loan
                   </Button>
                 </td>
@@ -150,7 +159,7 @@ function Loans() {
                 <td>Kaunokirjallisuus</td>
                 <td>Description</td>
                 <td>
-                  <Button variant="primary" type="submit">
+                  <Button bg={"success"} variant={"success"} type="submit">
                     Loan
                   </Button>
                 </td>
