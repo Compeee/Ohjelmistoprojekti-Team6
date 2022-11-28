@@ -25,14 +25,14 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
     private final LibraryUserService libraryUserService;
-    @PostMapping("/authenticate")
+    @PostMapping("/")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) throws Exception {
         Optional<LibraryUser> user = libraryUserService.validUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
         if (user.isPresent()) {
             LibraryUser user1 = user.get();
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            return ResponseEntity.ok(new AuthResponse(user1.getId(), authentication.getName(), user1.getEmail(),user1.getRole(), authentication.isAuthenticated()));
+            return ResponseEntity.ok(new AuthResponse(user1.getId(), user1.getUsername(), user1.getEmail(),user1.getRole()));
         }
         SecurityContextHolder.getContext().setAuthentication(null);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
