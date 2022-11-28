@@ -49,7 +49,7 @@ public class BookController {
     }
     @PreAuthorize("permitAll()")
     @GetMapping(path="/byGenre/{genre}")
-    public List<Book> getByGenre(@PathVariable(value="genre") String genre){
+    public List<Book> getByGenre(@PathVariable("genre") String genre){
         return bookService.getBooksByGenre(genre);
     }
 }

@@ -1,11 +1,10 @@
 package com.example.libraryapp.security;
 
-import com.example.libraryapp.libraryUser.LibraryUserRole;
 import com.example.libraryapp.libraryUser.LibraryUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -23,18 +22,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     private final LibraryUserService libraryUserService;
-
     private final PasswordEncoder passwordEncoder;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
+
+        http.
+                cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v*/register/**", "/login").permitAll()
+                .antMatchers("/css/**","/js/**","/images/**").permitAll()
+                .antMatchers("/api/v*/register/**", "/api/v*/login").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .httpBasic();
+
     }
 
     @Override
@@ -51,5 +52,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
 }

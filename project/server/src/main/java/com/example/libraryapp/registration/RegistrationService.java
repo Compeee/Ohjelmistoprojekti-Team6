@@ -15,12 +15,12 @@ public class RegistrationService {
     private final LibraryUserService libraryUserService;
     private final EmailValidator emailValidator;
     public String register(RegistrationRequest request) {
-        /*
+
         boolean validEmail = emailValidator.test(request.getEmail());
         if(!validEmail){
             throw new IllegalStateException("Invalid email");
         }
-         */
+
         return libraryUserService.signUpUser(new LibraryUser(
                 request.getUsername(),
                 request.getEmail(),
