@@ -3,6 +3,7 @@ package com.example.libraryapp.loan;
 import com.example.libraryapp.book.Book;
 import com.example.libraryapp.book.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class LoanService {
        return loanRepository.findAll();
     }
     public void createLoan(Loan loan){
-        // loan.getBook().setOn_loan(true);
+        loan.getBook().setOn_loan(true);
         loanRepository.save(loan);
         System.out.println(loan);
     }
@@ -29,6 +30,8 @@ public class LoanService {
     public Optional<Loan> getLoanById(Long loan_id){
         return loanRepository.findById(loan_id);
     }
+
+    @PreAuthorize("authentication.principal.username.equals(#userId)")
     public List<Loan> findLoansByUserId(Long user_id) {
         return loanRepository.findAllByUserId(user_id);
     }
@@ -40,8 +43,6 @@ public class LoanService {
     }
 
     public void deleteLoan(Long loan_id) {
-        loanRepository.deleteById(loan_id);
-
         Optional<Loan> loan = loanRepository.findById(loan_id);
         if(loan.isPresent()){
             Loan loan1 = loan.get();
@@ -50,6 +51,7 @@ public class LoanService {
             loan1.setBook(book);
             loanRepository.save(loan1);
         }
+        loanRepository.deleteById(loan_id);
 
     }
 }

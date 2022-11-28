@@ -1,22 +1,34 @@
 package com.example.libraryapp.libraryUser;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
 @Service
-public class LibraryUserService {
+public class LibraryUserService implements UserDetailsService {
 
     private final LibraryUserRepository libraryUserRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    public LibraryUserService(LibraryUserRepository libraryUserRepository){
-        this.libraryUserRepository = libraryUserRepository;
+    public String signUpUser(LibraryUser libraryUser){
+        boolean exists = libraryUserRepository.findByEmail(libraryUser.getEmail()).isPresent();
+
+        if(exists){
+            throw new IllegalStateException("Email already in use");
+        }
+        String bcryptPass = bCryptPasswordEncoder.encode(libraryUser.getPassword());
+        libraryUser.setPassword(bcryptPass);
+
+        libraryUserRepository.save(libraryUser);
+        return "it works";
     }
-
     public List<LibraryUser> getUsers(){
         return libraryUserRepository.findAll();
     }
@@ -29,17 +41,20 @@ public class LibraryUserService {
         return libraryUserRepository.findById(userId);
     }
 
-    public void addNewUser(LibraryUser libraryUser){
-        libraryUserRepository.save(libraryUser);
-        libraryUser.setTimestamp(Instant.now());
-    }
-
     public void deleteUser(Long userId) {
         boolean exists = libraryUserRepository.existsById(userId);
         if (!exists) {
             throw new IllegalStateException("User doesn't exist");
         }
         libraryUserRepository.deleteById(userId);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email)
+            throws UsernameNotFoundException {
+        return libraryUserRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException("user not found by email"));
     }
 
 }
