@@ -52,4 +52,9 @@ public class BookController {
     public List<Book> getByGenre(@PathVariable("genre") String genre){
         return bookService.getBooksByGenre(genre);
     }
+    @PreAuthorize("permitAll()")
+    @GetMapping(path="/search/{title}")
+    public List<Book> searchByTitle(@PathVariable("title") String title){
+        return bookService.getBooksByTitle(title);
+    }
 }

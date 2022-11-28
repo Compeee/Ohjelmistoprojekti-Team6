@@ -1,5 +1,5 @@
 package com.example.libraryapp.auth;
 
-public record AuthResponse(Long id, String name, com.example.libraryapp.libraryUser.LibraryUserRole role) {
+public record AuthResponse(Long id, String name, String email, com.example.libraryapp.libraryUser.LibraryUserRole role, boolean auth) {
 
 }

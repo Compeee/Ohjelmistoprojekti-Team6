@@ -44,4 +44,8 @@ public class BookService {
     public List<Book> getBooksByGenre(String genre) {
         return bookRepository.findAllByGenre(genre);
     }
+
+    public List<Book> getBooksByTitle(String title) {
+        return bookRepository.findAllByTitle(title);
+    }
 }
