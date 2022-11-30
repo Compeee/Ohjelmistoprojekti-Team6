@@ -20,3 +20,11 @@ $ git clone https://github.com/Compeee/Ohjelmistoprojekti-Team6.git
 $ cd Ohjelmistoprojekti-Team6
 $ cd project
 $ docker-compose up -d
+```
+
+### 3. Run backend
+```
+$ cd server 
+$ cd src/main/java/com/example/libraryapp
+$ Run LibraryApplication.java
+```
