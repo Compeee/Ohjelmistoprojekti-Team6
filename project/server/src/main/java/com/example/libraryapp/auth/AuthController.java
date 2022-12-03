@@ -32,7 +32,7 @@ public class AuthController {
             LibraryUser user1 = user.get();
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            return ResponseEntity.ok(new AuthResponse(user1.getId(), user1.getUsername(), user1.getEmail(),user1.getRole()));
+            return ResponseEntity.ok(new AuthResponse(user1.getId(), user1.getUsername(), user1.getPassword(), user1.getEmail(),user1.getRole()));
         }
         SecurityContextHolder.getContext().setAuthentication(null);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

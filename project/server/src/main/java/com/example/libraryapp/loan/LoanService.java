@@ -48,22 +48,14 @@ public class LoanService {
     }
     public void extendLoan(Long loan_id) {
         Loan loan = loanRepository.findById(loan_id).orElseThrow();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LibraryUser libraryUser = libraryUserRepository.findById(loan.getUser_id()).orElseThrow();
-        if(Objects.equals(libraryUser.getUsername(), authentication.getName())){
-            loan.setEndDate(loan.getEndDate().plusMonths(1));
-            loanRepository.save(loan);
-        }
+        loan.setEndDate(loan.getEndDate().plusMonths(1));
+        loanRepository.save(loan);
     }
 
     public void deleteLoan(Long loan_id) {
         Loan loan = loanRepository.findById(loan_id).orElseThrow();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Book book = bookRepository.findById(loan.getBook_id()).orElseThrow();
-        LibraryUser libraryUser = libraryUserRepository.findById(loan.getUser_id()).orElseThrow();
-        if(Objects.equals(libraryUser.getUsername(), authentication.getName())){
-            book.setOn_loan(false);
-            loanRepository.deleteById(loan_id);
-        }
+        book.setOn_loan(false);
+        loanRepository.deleteById(loan_id);
     }
 }

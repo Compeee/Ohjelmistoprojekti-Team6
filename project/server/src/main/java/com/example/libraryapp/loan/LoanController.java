@@ -46,7 +46,7 @@ public class LoanController {
         loanService.deleteLoan(loan_id);
 
     }
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+
     @PutMapping(path = "/extend/{loan_id}")
     public void extendLoan(@PathVariable("loan_id") Long loan_id){
         loanService.extendLoan(loan_id);

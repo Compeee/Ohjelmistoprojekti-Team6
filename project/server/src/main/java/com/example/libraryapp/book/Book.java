@@ -1,14 +1,12 @@
 package com.example.libraryapp.book;
 
-import com.example.libraryapp.loan.Loan;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,16 +23,16 @@ public class Book {
     private Long id;
     private String title;
     private String author;
-    private Integer year;
+    private Integer yr;
     private String description;
     private String genre;
     private Boolean on_loan;
     private String image;
 
-    public Book(String title, String author, Integer year, String description, String genre, Boolean on_loan, String image) {
+    public Book(String title, String author, Integer yr, String description, String genre, Boolean on_loan, String image) {
         this.title = title;
         this.author = author;
-        this.year = year;
+        this.yr = yr;
         this.description = description;
         this.genre = genre;
         this.on_loan = on_loan;
