@@ -40,7 +40,9 @@ public class LibraryUserService implements UserDetailsService {
         }
         return libraryUserRepository.findById(userId);
     }
-
+    public Optional<LibraryUser> getUserByUsername(String username) {
+        return libraryUserRepository.findByEmail(username);
+    }
     public void deleteUser(Long userId) {
         boolean exists = libraryUserRepository.existsById(userId);
         if (!exists) {
@@ -50,11 +52,21 @@ public class LibraryUserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email)
+    public LibraryUser loadUserByUsername(String email)
             throws UsernameNotFoundException {
         return libraryUserRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("user not found by email"));
     }
 
+    public void changePassword(Long userId, String password) {
+        LibraryUser user = libraryUserRepository.findById(userId).orElseThrow();
+
+        user.setPassword(bCryptPasswordEncoder.encode((password)));
+        libraryUserRepository.save(user);
+    }
+    public Optional<LibraryUser> validUsernameAndPassword(String username, String password) {
+        return getUserByUsername(username)
+                .filter(user -> bCryptPasswordEncoder.matches(password, user.getPassword()));
+    }
 }

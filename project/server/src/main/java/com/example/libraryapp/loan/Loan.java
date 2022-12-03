@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.List;
 
 
 @AllArgsConstructor
@@ -25,26 +24,24 @@ public class Loan {
     @SequenceGenerator(name = "loan_sequence", sequenceName = "loan_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loan_sequence")
     private Long id;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_book", referencedColumnName = "id")
-    private Book book;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_user", referencedColumnName = "id")
-    private LibraryUser libraryUser;
+
+    private Long book_id;
+
+    private Long user_id;
 
     private LocalDate startDate;
 
     private LocalDate endDate;
-
+    
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public Loan(Book book, LibraryUser libraryUser, LocalDate startDate, LocalDate endDate){
-        this.book = book;
-        this.libraryUser = libraryUser;
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public Loan(Long book_id, Long user_id){
+        this.book_id = book_id;
+        this.user_id = user_id;
+        this.startDate = LocalDate.now();
+        this.endDate = LocalDate.now().plusMonths(1);
     }
     
 }

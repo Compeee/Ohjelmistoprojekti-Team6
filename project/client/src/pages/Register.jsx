@@ -11,6 +11,8 @@ import { useContext } from "react";
 import { ThemeContext } from "../ThemeContext.js";
 import { NavLink } from "react-router-dom";
 
+
+
 export function Register() {
   const { theme, setTheme } = useContext(ThemeContext);
   return (
