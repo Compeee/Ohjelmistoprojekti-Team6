@@ -18,27 +18,35 @@ public class LoanController {
         this.loanService = loanService;
     }
 
+
+    @PreAuthorize("#userId == principal.id")
     @GetMapping("/{userId}")
     public List<Loan> getLoansByUserId(@PathVariable Long user_id){
         return loanService.findLoansByUserId(user_id);
     }
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public List<Loan> getLoans(){
         return loanService.getLoans();
     }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @PostMapping
     public void createNewLoan(@RequestBody Loan loan){
         loanService.createLoan(loan);
     }
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{loan_id}")
     public Optional<Loan> findLoanById(@PathVariable("loan_id") Long loan_id){
         return loanService.getLoanById(loan_id);
     }
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @DeleteMapping("/{loan_id}")
     public void deleteLoanById(@PathVariable Long loan_id){
         loanService.deleteLoan(loan_id);
 
     }
+
     @PutMapping(path = "/extend/{loan_id}")
     public void extendLoan(@PathVariable("loan_id") Long loan_id){
         loanService.extendLoan(loan_id);

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,9 +22,8 @@ public class BookService {
 
     }
 
-    public void addNewBook(Book book) {
-        bookRepository.save(book);
-        System.out.println(book);
+    public Book addNewBook(Book book) {
+       return bookRepository.save(book);
     }
     public Optional<Book> findBookById(Long bookId) {
         boolean exists = bookRepository.existsById(bookId);
@@ -43,5 +43,9 @@ public class BookService {
 
     public List<Book> getBooksByGenre(String genre) {
         return bookRepository.findAllByGenre(genre);
+    }
+
+    public List<Book> getBooksByTitle(String title) {
+        return bookRepository.findAllByTitle(title);
     }
 }
