@@ -28,5 +28,5 @@ $ cd server
 $ cd src/main/java/com/example/libraryapp
 $ Run LibraryApplication.java
 *** IntelliJ ***
-$ You might have to right click pom.xml -> maven -> reload project ur getting build errors
+$ You might have to right click pom.xml -> maven -> reload project if ur getting build errors
 ```
