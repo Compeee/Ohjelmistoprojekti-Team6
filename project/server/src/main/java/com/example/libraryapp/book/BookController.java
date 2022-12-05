@@ -3,6 +3,7 @@ package com.example.libraryapp.book;
 import java.util.List;
 import java.util.Optional;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "api/v1/book")
 @CrossOrigin(origins = "http://localhost:3000")
+@SecurityRequirement(name = "library-api")
 public class BookController {
 
 
