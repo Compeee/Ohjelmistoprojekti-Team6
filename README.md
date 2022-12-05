@@ -8,6 +8,12 @@
 
 # Run Locally
 
+### Tools and Software needed
+```
+Intellij Community Edition
+```
+###
+
 ### 1. Clone repo
 
 ```
