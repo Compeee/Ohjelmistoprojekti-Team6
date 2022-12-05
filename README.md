@@ -10,7 +10,7 @@
 
 ### Tools and Software needed
 ```
-Intellij Community Edition
+Intellij Community Edition for running backend and backend tests
 ```
 ###
 
@@ -32,8 +32,8 @@ $ docker-compose up -d
 ```
 $ cd server 
 $ cd src/main/java/com/example/libraryapp
-$ Run LibraryApplication.java
 *** IntelliJ ***
+$ Run LibraryApplication.java
 $ You might have to right click pom.xml -> maven -> reload project if ur getting build errors
 ```
 ### 3. Run frontend
