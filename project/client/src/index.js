@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback, useContext } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
@@ -9,30 +9,94 @@ import Loans from "./pages/Loans";
 import Contact from "./pages/Contact";
 import Users from "./admin-pages/Users";
 import Books from "./admin-pages/Books";
-import { ThemeContext } from "./ThemeContext";
+import { ThemeContext } from "./context/ThemeContext";
+import { AuthContext } from "./context/AuthContext";
+import NavigationBar from "./components/Navbar";
 
 export default function App() {
+  const [email, setEmail] = useState(false);
+  const [password, setPassword] = useState(false);
+  const [role, setRole] = useState(false);
+  const [userId, setUserId] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   // default theme value
   const [theme, setTheme] = useState("primary");
   // useMemo for memoized values
   const providerTheme = useMemo(() => ({ theme, setTheme }), [theme, setTheme]);
 
+  const login = useCallback((password, email, role, userId) => {
+    setPassword(password);
+    setEmail(email);
+    setRole(role);
+    setUserId(userId);
+    setIsLoggedIn(true);
+  }, []);
+
+  const logout = useCallback(() => {
+    setPassword(null);
+    setEmail(null);
+    setRole(null);
+    setUserId(null);
+    setIsLoggedIn(false);
+  }, []);
+
+  let routes;
+  if (isLoggedIn && role === "ADMIN") {
+    routes = (
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Index />} />
+          <Route path="register" element={<Register />} />
+          <Route path="home" element={<Home />} />
+          <Route path="loans" element={<Loans />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="users" element={<Users />} />
+          <Route path="books" element={<Books />} />
+        </Route>
+      </Routes>
+    );
+  } else if (isLoggedIn && role === "USER") {
+    routes = (
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Index />} />
+          <Route path="register" element={<Register />} />
+          <Route path="home" element={<Home />} />
+          <Route path="loans" element={<Loans />} />
+          <Route path="contact" element={<Contact />} />
+        </Route>
+      </Routes>
+    );
+  } else {
+    routes = (
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Index />} />
+          <Route path="register" element={<Register />} />
+        </Route>
+      </Routes>
+    );
+  }
+
   return (
-    <Router>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: isLoggedIn,
+        password: password,
+        email: email,
+        role: role,
+        userId: userId,
+        login: login,
+        logout: logout,
+      }}
+    >
       <ThemeContext.Provider value={providerTheme}>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Index />} />
-            <Route path="register" element={<Register />} />
-            <Route path="home" element={<Home />} />
-            <Route path="loans" element={<Loans />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="users" element={<Users />} />
-            <Route path="books" element={<Books />} />
-          </Route>
-        </Routes>
+        <Router>
+          <NavigationBar />
+          <main>{routes}</main>
+        </Router>
       </ThemeContext.Provider>
-    </Router>
+    </AuthContext.Provider>
   );
 }
 
