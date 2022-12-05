@@ -23,8 +23,8 @@ class LoanRepositoryTest {
 
     @Test
     void findAllByUserId() {
-        Loan loan = new Loan(2L, 2L);
-        Loan loan1 = new Loan(1L, 2L);
+        Loan loan = new Loan(2L, 2L, "Harry Potter");
+        Loan loan1 = new Loan(1L, 2L, "Risto Räppääjä");
         loanRepository.save(loan);
         List<Loan> loans = loanRepository.findAllByUserId(2L);
         Assertions.assertEquals(1, loans.size());

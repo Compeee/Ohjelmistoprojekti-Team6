@@ -50,7 +50,7 @@ class BookServiceTest {
         book.setGenre("Genre");
         book.setId(123L);
         book.setImage("Image");
-        book.setOn_loan(true);
+        book.setOnloan(true);
         book.setTitle("Dr");
         book.setYr(1);
         when(bookRepository.save((Book) any())).thenReturn(book);
@@ -61,7 +61,7 @@ class BookServiceTest {
         book1.setGenre("Genre");
         book1.setId(123L);
         book1.setImage("Image");
-        book1.setOn_loan(true);
+        book1.setOnloan(true);
         book1.setTitle("Dr");
         book1.setYr(1);
         assertSame(book, bookService.addNewBook(book1));
@@ -77,7 +77,7 @@ class BookServiceTest {
         book.setGenre("Genre");
         book.setId(123L);
         book.setImage("Image");
-        book.setOn_loan(true);
+        book.setOnloan(true);
         book.setTitle("Dr");
         book.setYr(1);
         Optional<Book> ofResult = Optional.of(book);

@@ -29,6 +29,7 @@ public class Loan {
 
     private Long user_id;
 
+    private String book_title;
     private LocalDate startDate;
 
     private LocalDate endDate;
@@ -37,9 +38,10 @@ public class Loan {
         this.endDate = endDate;
     }
 
-    public Loan(Long book_id, Long user_id){
+    public Loan(Long book_id, Long user_id, String book_title){
         this.book_id = book_id;
         this.user_id = user_id;
+        this.book_title = book_title;
         this.startDate = LocalDate.now();
         this.endDate = LocalDate.now().plusMonths(1);
     }
