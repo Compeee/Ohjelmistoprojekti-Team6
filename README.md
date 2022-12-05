@@ -46,5 +46,13 @@ $ npm start
 $ Open project in IntelliJ Community
 $ Locate the test/java folder
 $ Right click com.example.libraryapp and run tests with coverage
+```
 ![examplepic](https://i.imgur.com/F6Dtusr.png)
+
+### API Documentation
+
+Once you have the backend running you can access API Documentation
+
+```
+http://localhost:8080/swagger-ui/index.html
 ```
