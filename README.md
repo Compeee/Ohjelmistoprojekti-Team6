@@ -56,3 +56,4 @@ Once you have the backend running you can access API Documentation
 ```
 http://localhost:8080/swagger-ui/index.html
 ```
+![apidoc](https://i.imgur.com/FeuaTKJ.png)
