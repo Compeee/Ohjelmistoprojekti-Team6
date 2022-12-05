@@ -41,3 +41,10 @@ $ You might have to right click pom.xml -> maven -> reload project if ur getting
 $ cd client 
 $ npm start
 ```
+### 3. Run backend tests
+```
+$ Open project in IntelliJ Community
+$ Locate the test/java folder
+$ Right click com.example.libraryapp and run tests with coverage
+![examplepic](https://i.imgur.com/F6Dtusr.png)
+```
