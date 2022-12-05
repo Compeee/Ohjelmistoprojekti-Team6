@@ -48,4 +48,8 @@ public class BookService {
     public List<Book> getBooksByTitle(String title) {
         return bookRepository.findAllByTitle(title);
     }
+
+    public List<Book> getAvailableBooks() {
+        return bookRepository.findAllByOnloan(false);
+    }
 }

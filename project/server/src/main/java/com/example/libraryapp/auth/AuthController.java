@@ -11,28 +11,28 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/auth")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
     private final LibraryUserService libraryUserService;
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) throws Exception {
         Optional<LibraryUser> user = libraryUserService.validUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
         if (user.isPresent()) {
             LibraryUser user1 = user.get();
+
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            return ResponseEntity.ok(new AuthResponse(user1.getId(), user1.getUsername(), user1.getPassword(), user1.getEmail(),user1.getRole()));
+
+            return ResponseEntity.ok(new AuthResponse(user1.getId(), user1.getUsername(), user1.getEmail(),user1.getRole()));
         }
         SecurityContextHolder.getContext().setAuthentication(null);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

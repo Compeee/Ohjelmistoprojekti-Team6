@@ -16,7 +16,7 @@ public class LoanConfig {
     @Bean
     CommandLineRunner commandLineLoanRunner(LoanRepository repository){
         return args -> {
-            Loan loan1 = new Loan(1L, 1L);
+            Loan loan1 = new Loan(1L, 1L, "Harry Potter");
             repository.saveAll(List.of(loan1));
         };
     }

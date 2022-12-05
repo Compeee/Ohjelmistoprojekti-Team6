@@ -1,16 +1,16 @@
 package com.example.libraryapp.loan;
 
-import com.example.libraryapp.book.BookRepository;
-import com.example.libraryapp.libraryUser.LibraryUserRepository;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
+
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/loan")
+@CrossOrigin(origins = "http://localhost:3000")
 public class LoanController {
     private final LoanService loanService;
 
@@ -20,9 +20,9 @@ public class LoanController {
 
 
     @PreAuthorize("#userId == principal.id")
-    @GetMapping("/{userId}")
-    public List<Loan> getLoansByUserId(@PathVariable Long user_id){
-        return loanService.findLoansByUserId(user_id);
+    @GetMapping("/byUser/{userId}")
+    public List<Loan> getLoansByUserId(@PathVariable Long userId){
+        return loanService.findLoansByUserId(userId);
     }
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
