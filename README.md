@@ -39,6 +39,7 @@ $ You might have to right click pom.xml -> maven -> reload project if ur getting
 ### 3. Run frontend
 ```
 $ cd client 
+$ npm install
 $ npm start
 ```
 ### 3. Run backend tests
