@@ -11,6 +11,7 @@
 ### Tools and Software needed
 ```
 Intellij Community Edition for running backend and backend tests
+Docker for the database
 ```
 ###
 
