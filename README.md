@@ -30,3 +30,8 @@ $ Run LibraryApplication.java
 *** IntelliJ ***
 $ You might have to right click pom.xml -> maven -> reload project if ur getting build errors
 ```
+### 3. Run frontend
+```
+$ cd client 
+$ npm start
+```

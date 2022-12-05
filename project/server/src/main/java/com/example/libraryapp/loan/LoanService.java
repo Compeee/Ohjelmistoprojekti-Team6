@@ -33,18 +33,16 @@ public class LoanService {
     public void createLoan(Loan loan){
         loanRepository.save(loan);
         Book book = bookRepository.findById(loan.getBook_id()).orElseThrow();
-        book.setOn_loan(true);
+        book.setOnloan(true);
         bookRepository.save(book);
-
-        System.out.println(loan);
     }
 
     public Optional<Loan> getLoanById(Long loan_id){
         return loanRepository.findById(loan_id);
     }
 
-    public List<Loan> findLoansByUserId(Long user_id) {
-        return loanRepository.findAllByUserId(user_id);
+    public List<Loan> findLoansByUserId(Long userId) {
+        return loanRepository.findAllByUserId(userId);
     }
     public void extendLoan(Long loan_id) {
         Loan loan = loanRepository.findById(loan_id).orElseThrow();
@@ -55,7 +53,8 @@ public class LoanService {
     public void deleteLoan(Long loan_id) {
         Loan loan = loanRepository.findById(loan_id).orElseThrow();
         Book book = bookRepository.findById(loan.getBook_id()).orElseThrow();
-        book.setOn_loan(false);
+        book.setOnloan(false);
+        bookRepository.save(book);
         loanRepository.deleteById(loan_id);
     }
 }

@@ -1,60 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
 import Table from "react-bootstrap/Table";
-import Clock from "../Clock.js";
-import Logout from "../Logout.js";
+import axios from "axios";
 import { useContext } from "react";
-import { ThemeContext } from "../ThemeContext.js";
+import { ThemeContext } from "../context/ThemeContext";
+import { AuthContext } from "../context/AuthContext.js";
 
 function Loans() {
+  const auth = useContext(AuthContext);
   const { theme, setTheme } = useContext(ThemeContext);
+  const [books, setBooks] = useState("");
+  const [loans, setLoans] = useState("");
+
+  const getAvailBooks = () => {
+    axios.get("http://localhost:8080/api/v1/book/available").then((res) => {
+      setBooks(res.data);
+    });
+    console.log(books);
+  };
+
+  var authBasic = window.btoa(auth.email + ":" + auth.password);
+  var config = {
+    headers: {
+      Authorization: "Basic " + authBasic,
+    },
+  };
+
+  const getUsersLoans = () => {
+    axios
+      .get(`http://localhost:8080/api/v1/loan/byUser/${auth.userId}`, config)
+      .then((res) => {
+        setLoans(res.data);
+        console.log(res.data);
+      });
+  };
+
+  useEffect(() => {
+    getAvailBooks();
+  }, []);
+
+  useEffect(() => {
+    getUsersLoans();
+  }, []);
+
   return (
     <div className="App">
       <>
-        <Navbar collapseOnSelect expand="lg" bg={theme} variant={theme}>
-          <Container fluid="md">
-            <Navbar.Brand>Library App</Navbar.Brand>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className="me-auto">
-                <NavDropdown title="Theme" id="basic-nav-dropdown">
-                  <NavDropdown.Item onClick={() => setTheme("primary")}>
-                    Blue
-                  </NavDropdown.Item>
-                  <NavDropdown.Item onClick={() => setTheme("dark")}>
-                    Dark
-                  </NavDropdown.Item>
-                  <NavDropdown.Item onClick={() => setTheme("light")}>
-                    Light
-                  </NavDropdown.Item>
-                  <NavDropdown.Item onClick={() => setTheme("success")}>
-                    Green
-                  </NavDropdown.Item>
-                  <NavDropdown.Item onClick={() => setTheme("warning")}>
-                    Yellow
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
-              <Nav>
-                <Navbar.Text className="navBarLink" id="status">
-                  {theme}
-                </Navbar.Text>
-                <Clock></Clock>
-              </Nav>
-              <Nav>
-                <Button variant="danger" onClick={Logout}>
-                  Log out
-                </Button>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
         <Container fluid="md">
           <p> </p>
           <h1>Active loans</h1>
@@ -63,53 +57,25 @@ function Loans() {
             <thead>
               <tr>
                 <th>Title</th>
-                <th>Author</th>
-                <th>Year</th>
-                <th>Genre</th>
-                <th>Description</th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Status</th>
                 <th>Renewal</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Neulos</td>
-                <td>Reetta Pellikka</td>
-                <td>2022</td>
-                <td>Tietokirjallisuus</td>
-                <td>
-                  Neulos opastaa hitaan muodin maailmaan ja tarjoaa vaatteita ja
-                  asusteita jokaiseen vuodenaikaan.
-                </td>
-                <td>2022-10-01</td>
-                <td>2022-10-31</td>
-                <td>Pending</td>
-                <td>
-                  <Button bg={"success"} variant={"success"} type="submit">
-                    Renew
-                  </Button>
-                </td>
-              </tr>
-              <tr>
-                <td>Ai­noa ko­ti­ni</td>
-                <td>Hanna Brotherus</td>
-                <td>2022</td>
-                <td>Kaunokirjallisuus</td>
-                <td>
-                  Ainoa kotini on rohkea romaani naisen halusta nähdä itsensä
-                  kokonaisena.
-                </td>
-                <td>2022-10-20</td>
-                <td>2022-12-15</td>
-                <td>Extended</td>
-                <td>
-                  <Button bg={"success"} variant={"success"} type="submit">
-                    Renew
-                  </Button>
-                </td>
-              </tr>
+              {loans &&
+                loans.map((loan) => (
+                  <tr>
+                    <td>{loan.book_title}</td>
+                    <td>{loan.startDate}</td>
+                    <td>{loan.endDate}</td>
+                    <td>
+                      <Button bg={"success"} variant={"success"} type="submit">
+                        Renew
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
           <p> </p>
@@ -140,30 +106,21 @@ function Loans() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Katse</td>
-                <td>Saija Kuusela</td>
-                <td>2022</td>
-                <td>Poliisikirjallisuus</td>
-                <td>Description</td>
-                <td>
-                  <Button bg={"success"} variant={"success"} type="submit">
-                    Loan
-                  </Button>
-                </td>
-              </tr>
-              <tr>
-                <td>Loukko</td>
-                <td>Max Seeck</td>
-                <td>2022</td>
-                <td>Kaunokirjallisuus</td>
-                <td>Description</td>
-                <td>
-                  <Button bg={"success"} variant={"success"} type="submit">
-                    Loan
-                  </Button>
-                </td>
-              </tr>
+              {books &&
+                books.map((book) => (
+                  <tr>
+                    <td>{book.title}</td>
+                    <td>{book.author}</td>
+                    <td>{book.yr}</td>
+                    <td>{book.genre}</td>
+                    <td>{book.description}</td>
+                    <td>
+                      <Button bg={theme} variant={theme} type="submit">
+                        Loan
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
         </Container>

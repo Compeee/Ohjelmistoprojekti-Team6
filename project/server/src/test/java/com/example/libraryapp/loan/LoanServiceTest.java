@@ -37,7 +37,7 @@ class LoanServiceTest {
     void testCreateLoan() {
 
         LoanService loanService = this.loanService;
-        Loan loan = new Loan(2L, 2L);
+        Loan loan = new Loan(2L, 2L, "Narnia");
 
 
         loanService.createLoan(loan);
