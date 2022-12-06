@@ -36,7 +36,8 @@ public class LibraryUserController {
     }
     @PreAuthorize("#userId == principal.id")
     @PatchMapping(path = "/{userId}")
-    public void changeUserPassword(@PathVariable("userId") Long userId, String password){
-        libraryUserService.changePassword(userId, password);
+    public void changeUserPassword(@PathVariable("userId") Long userId, @RequestBody ChangePassRequest changePassRequest){
+        System.out.println(changePassRequest.getPassword());
+        libraryUserService.changePassword(userId, changePassRequest.getPassword());
     }
 }

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink, useNavigate, useParams } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { ThemeContext } from "../context/ThemeContext.js";
@@ -11,6 +11,7 @@ import Clock from "../Clock.js";
 import { AuthContext } from "../context/AuthContext.js";
 
 export default function NavigationBar() {
+  const navigate = useNavigate();
   const { theme, setTheme } = useContext(ThemeContext);
   const auth = useContext(AuthContext); //Linking our AuthContext from app
   return (
@@ -81,8 +82,21 @@ export default function NavigationBar() {
           <Clock></Clock>
         </Navbar.Collapse>
         {auth.isLoggedIn && (
+          <Nav.Item>
+            <Nav.Link as={NavLink} to="/profile">
+              Profile
+            </Nav.Link>
+          </Nav.Item>
+        )}
+        {auth.isLoggedIn && (
           <Nav>
-            <Button variant="danger" onClick={auth.logout}>
+            <Button
+              variant="danger"
+              onClick={() => {
+                auth.logout();
+                navigate("/");
+              }}
+            >
               Log out
             </Button>
           </Nav>

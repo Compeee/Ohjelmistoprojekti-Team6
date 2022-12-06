@@ -61,8 +61,7 @@ public class LibraryUserService implements UserDetailsService {
 
     public void changePassword(Long userId, String password) {
         LibraryUser user = libraryUserRepository.findById(userId).orElseThrow();
-
-        user.setPassword(bCryptPasswordEncoder.encode((password)));
+        user.setPassword(bCryptPasswordEncoder.encode(password));
         libraryUserRepository.save(user);
     }
     public Optional<LibraryUser> validUsernameAndPassword(String username, String password) {

@@ -12,6 +12,7 @@ import Books from "./admin-pages/Books";
 import { ThemeContext } from "./context/ThemeContext";
 import { AuthContext } from "./context/AuthContext";
 import NavigationBar from "./components/Navbar";
+import UserProfile from "./pages/UserProfile";
 
 export default function App() {
   const [email, setEmail] = useState(false);
@@ -52,6 +53,7 @@ export default function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="users" element={<Users />} />
           <Route path="books" element={<Books />} />
+          <Route path="profile" element={<UserProfile />} />
         </Route>
       </Routes>
     );
@@ -64,6 +66,7 @@ export default function App() {
           <Route path="home" element={<Home />} />
           <Route path="loans" element={<Loans />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="profile" element={<UserProfile />} />
         </Route>
       </Routes>
     );
