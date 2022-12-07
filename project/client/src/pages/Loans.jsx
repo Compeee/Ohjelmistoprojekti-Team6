@@ -29,6 +29,7 @@ function Loans() {
     },
   };
 
+  // Getting users loans data
   const getUsersLoans = () => {
     axios
       .get(`http://localhost:8080/api/v1/loan/byUser/${auth.userId}`, config)
@@ -50,9 +51,8 @@ function Loans() {
     <div className="App">
       <>
         <Container fluid="md">
-          <p> </p>
-          <h1>Active loans</h1>
-          <p> </p>
+          <h1 style={{ marginTop: "2%", marginBottom: "2%" }}>Loans</h1>
+          {/* User's current loans table data */}
           <Table striped bordered hover variant={theme}>
             <thead>
               <tr>
@@ -78,9 +78,10 @@ function Loans() {
                 ))}
             </tbody>
           </Table>
-          <p> </p>
-          <h1>Available books</h1>
-          <p> </p>
+          <h1 style={{ marginTop: "2%", marginBottom: "2%" }}>
+            Available books
+          </h1>
+          {/* Available books search form */}
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Book search</Form.Label>
@@ -94,6 +95,7 @@ function Loans() {
             </Button>
           </Form>
           <p> </p>
+          {/* Available loans table data */}
           <Table striped bordered hover variant={theme}>
             <thead>
               <tr>

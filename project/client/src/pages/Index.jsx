@@ -32,9 +32,7 @@ function Index() {
     <div className="App">
       <>
         <Container fluid="md">
-          <p> </p>
-          <h1>Login</h1>
-          <p> </p>
+          <h1 style={{ marginTop: "2%", marginBottom: "2%" }}>Login</h1>
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
