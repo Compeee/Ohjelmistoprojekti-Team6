@@ -10,6 +10,13 @@ import Nav from "react-bootstrap/Nav";
 import Clock from "../Clock.js";
 import { AuthContext } from "../context/AuthContext.js";
 
+const styles = {
+  section: {
+    padding: "",
+  },
+  wrapper: {},
+};
+
 export default function NavigationBar() {
   const navigate = useNavigate();
   const { theme, setTheme } = useContext(ThemeContext);
@@ -76,31 +83,33 @@ export default function NavigationBar() {
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
-          <Navbar.Text className="navBarLink" id="status">
-            {auth.isLoggedIn ? "Logged in" : "Not logged in"}
-          </Navbar.Text>
-          <Clock></Clock>
-        </Navbar.Collapse>
-        {auth.isLoggedIn && (
-          <Nav.Item>
-            <Nav.Link as={NavLink} to="/profile">
-              Profile
-            </Nav.Link>
-          </Nav.Item>
-        )}
-        {auth.isLoggedIn && (
           <Nav>
-            <Button
-              variant="danger"
-              onClick={() => {
-                auth.logout();
-                navigate("/");
-              }}
-            >
-              Log out
-            </Button>
+            <Navbar.Text style={{ padding: "2px" }} id="status">
+              {auth.isLoggedIn ? "Logged in" : "Not logged in"}
+            </Navbar.Text>
+            <Clock></Clock>
           </Nav>
-        )}
+          {auth.isLoggedIn && (
+            <Nav.Item>
+              <Nav.Link as={NavLink} to="/profile">
+                Profile
+              </Nav.Link>
+            </Nav.Item>
+          )}
+          {auth.isLoggedIn && (
+            <Nav>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  auth.logout();
+                  navigate("/");
+                }}
+              >
+                Log out
+              </Button>
+            </Nav>
+          )}
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );
