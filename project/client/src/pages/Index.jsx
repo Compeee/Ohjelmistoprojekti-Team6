@@ -1,12 +1,13 @@
-import React, { useContext, useState, useCallback } from "react";
+import React, { useContext, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ThemeContext } from "../context/ThemeContext";
 import { AuthContext } from "../context/AuthContext";
+
 function Index() {
   const { theme, setTheme } = useContext(ThemeContext);
   const auth = useContext(AuthContext);
@@ -63,9 +64,8 @@ function Index() {
               Login
             </Button>
             <Form.Text className="text"> </Form.Text>
-            <Form.Text className="text">
-              No login credentials? <a href="/register">Register now</a>
-            </Form.Text>
+            <Form.Text className="text">No login credentials? </Form.Text>
+            <Link to="/register">Register now</Link>
           </Form>
         </Container>
       </>
