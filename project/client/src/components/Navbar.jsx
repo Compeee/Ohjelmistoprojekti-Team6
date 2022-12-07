@@ -10,13 +10,6 @@ import Nav from "react-bootstrap/Nav";
 import Clock from "../Clock.js";
 import { AuthContext } from "../context/AuthContext.js";
 
-const styles = {
-  section: {
-    padding: "",
-  },
-  wrapper: {},
-};
-
 export default function NavigationBar() {
   const navigate = useNavigate();
   const { theme, setTheme } = useContext(ThemeContext);
