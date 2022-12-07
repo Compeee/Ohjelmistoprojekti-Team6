@@ -16,7 +16,11 @@ function Clock() {
   }
 
   today = yyyy + "-" + mm + "-" + dd;
-  return <Navbar.Text id="date">{today}</Navbar.Text>;
+  return (
+    <Navbar.Text style={{ padding: "3px" }} id="date">
+      {today}
+    </Navbar.Text>
+  );
 }
 
 export default Clock;
