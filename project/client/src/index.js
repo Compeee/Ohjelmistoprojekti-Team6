@@ -42,6 +42,7 @@ export default function App() {
   }, []);
 
   let routes;
+  // Sets navigation routes for admin users
   if (isLoggedIn && role === "ADMIN") {
     routes = (
       <Routes>
@@ -57,6 +58,7 @@ export default function App() {
         </Route>
       </Routes>
     );
+    // Sets navigation routes for regular users
   } else if (isLoggedIn && role === "USER") {
     routes = (
       <Routes>

@@ -27,10 +27,9 @@ export function Register() {
   return (
     <div className="App">
       <Container fluid="md">
-        <p> </p>
-        <h1>Register</h1>
-        <p> </p>
+        <h1 style={{ marginTop: "2%", marginBottom: "2%" }}>Register</h1>
         <Form>
+          {/* Email registration field */}
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email</Form.Label>
             <Form.Control
@@ -42,6 +41,7 @@ export function Register() {
               We will never share your email with anyone else.
             </Form.Text>
           </Form.Group>
+          {/* Username registration field */}
           <Form.Group className="mb-3" controlId="formBasicUsername">
             <Form.Label>Username</Form.Label>
             <Form.Control
@@ -50,6 +50,7 @@ export function Register() {
               onChange={(e) => setUsername(e.target.value)}
             />
           </Form.Group>
+          {/* Password registration field which uses preset controlid to hide input value */}
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control
@@ -58,11 +59,12 @@ export function Register() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
+          {/* Register button */}
           <Button
             bg={theme}
             variant={theme}
             type="submit"
-            onClick={(onSubmitHandler)}
+            onClick={onSubmitHandler}
           >
             Register
           </Button>

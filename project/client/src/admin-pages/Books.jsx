@@ -4,7 +4,6 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
-import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../context/ThemeContext";
@@ -31,12 +30,15 @@ function Books() {
       Authorization: "Basic " + authBasic,
     },
   };
+
+  // Getting books data
   const getBooks = () => {
     axios.get("http://localhost:8080/api/v1/book").then((res) => {
       setBooks(res.data);
     });
   };
 
+  // Adding a book
   const postBook = () => {
     axios
       .post("http://localhost:8080/api/v1/book", newBook, config)
@@ -45,6 +47,7 @@ function Books() {
       });
   };
 
+  // Deleting a book
   const deleteBook = (bookId) => {
     axios
       .delete(`http://localhost:8080/api/v1/book/${bookId}`, config)
@@ -53,6 +56,7 @@ function Books() {
       });
   };
 
+  // Updating book values
   const handleChange = (event) => {
     const { name, value } = event.target;
     setNewBook({ ...newBook, [name]: value });
@@ -65,9 +69,7 @@ function Books() {
     <div className="App">
       <>
         <Container fluid="md">
-          <p> </p>
-          <h1>Books list</h1>
-          <p> </p>
+          <h1 style={{ marginTop: "2%", marginBottom: "2%" }}>Books</h1>
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Books search</Form.Label>
@@ -81,6 +83,7 @@ function Books() {
             </Button>
           </Form>
           <p> </p>
+          {/* Books table data */}
           <Table striped bordered hover bg={theme} variant={theme}>
             <thead>
               <tr>
@@ -103,7 +106,7 @@ function Books() {
                     <td>{book.genre}</td>
                     <td>{book.description}</td>
                     <td>{book.onloan ? "On loan" : "Available"}</td>
-
+                    {/* Book deletion button*/}
                     <td>
                       <Button
                         variant="danger"
@@ -157,6 +160,7 @@ function Books() {
                     onChange={handleChange}
                   ></input>
                 </td>
+                {/* Button for adding a book */}
                 <td>
                   <Button variant="primary" type="submit" onClick={postBook}>
                     Add book

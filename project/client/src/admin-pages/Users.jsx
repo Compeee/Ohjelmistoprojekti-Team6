@@ -19,6 +19,8 @@ function Users() {
       Authorization: "Basic " + authBasic,
     },
   };
+
+  // Getting the users data
   const getUsers = () => {
     axios.get("http://localhost:8080/api/v1/user", config).then((res) => {
       setUsers(res.data);
@@ -31,15 +33,14 @@ function Users() {
     <div className="App">
       <>
         <Container fluid="md">
-          <p> </p>
-          <h1>Users list</h1>
-          <p> </p>
+          <h1 style={{ marginTop: "2%", marginBottom: "2%" }}>Users</h1>
+          {/* Users list filter form */}
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>User search</Form.Label>
               <Form.Control type="email" placeholder="Enter Search Terms" />
               <Form.Text className="text-muted">
-                Searching instructions/tips here
+                Search by user email instead of username
               </Form.Text>
             </Form.Group>
             <Button variant={theme} type="submit">
@@ -47,6 +48,7 @@ function Users() {
             </Button>
           </Form>
           <p> </p>
+          {/* Users table data */}
           <Table striped bordered hover bg={theme} variant={theme}>
             <thead>
               <tr>
