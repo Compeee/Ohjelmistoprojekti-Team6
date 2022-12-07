@@ -1,6 +1,8 @@
 package com.example.libraryapp.loan;
 
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +13,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "api/v1/loan")
 @CrossOrigin(origins = "http://localhost:3000")
+@SecurityRequirement(name = "library-api")
 public class LoanController {
     private final LoanService loanService;
 

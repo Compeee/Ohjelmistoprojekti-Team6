@@ -21,7 +21,7 @@ export function Register() {
         { username: username, password: password, email: email },
         { "Content-Type": "application/json" }
       )
-      .then((res) => navigate("/login"));
+      .then((res) => navigate("/"));
   };
   const { theme, setTheme } = useContext(ThemeContext);
   return (
@@ -42,7 +42,7 @@ export function Register() {
               We will never share your email with anyone else.
             </Form.Text>
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3" controlId="formBasicUsername">
             <Form.Label>Username</Form.Label>
             <Form.Control
               type="username"
@@ -62,7 +62,7 @@ export function Register() {
             bg={theme}
             variant={theme}
             type="submit"
-            onClick={onSubmitHandler}
+            onClick={(onSubmitHandler)}
           >
             Register
           </Button>

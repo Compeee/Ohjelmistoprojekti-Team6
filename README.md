@@ -8,6 +8,13 @@
 
 # Run Locally
 
+### Tools and Software needed
+```
+Intellij Community Edition for running backend and backend tests
+Docker for the database
+```
+###
+
 ### 1. Clone repo
 
 ```
@@ -26,12 +33,29 @@ $ docker-compose up -d
 ```
 $ cd server 
 $ cd src/main/java/com/example/libraryapp
-$ Run LibraryApplication.java
 *** IntelliJ ***
+$ Run LibraryApplication.java
 $ You might have to right click pom.xml -> maven -> reload project if ur getting build errors
 ```
 ### 3. Run frontend
 ```
 $ cd client 
+$ npm install
 $ npm start
 ```
+### 3. Run backend tests
+```
+$ Open project in IntelliJ Community
+$ Locate the test/java folder
+$ Right click com.example.libraryapp and run tests with coverage
+```
+![examplepic](https://i.imgur.com/F6Dtusr.png)
+
+### API Documentation
+
+Once you have the backend running you can access API Documentation
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+![apidoc](https://i.imgur.com/FeuaTKJ.png)
