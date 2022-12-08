@@ -1,6 +1,11 @@
 import React, { useState, useMemo, useCallback, useContext } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Index from "./pages/Index";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
@@ -55,6 +60,7 @@ export default function App() {
           <Route path="users" element={<Users />} />
           <Route path="books" element={<Books />} />
           <Route path="profile" element={<UserProfile />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Route>
       </Routes>
     );
@@ -69,6 +75,7 @@ export default function App() {
           <Route path="loans" element={<Loans />} />
           <Route path="contact" element={<Contact />} />
           <Route path="profile" element={<UserProfile />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Route>
       </Routes>
     );
@@ -78,6 +85,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Index />} />
           <Route path="register" element={<Register />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Route>
       </Routes>
     );

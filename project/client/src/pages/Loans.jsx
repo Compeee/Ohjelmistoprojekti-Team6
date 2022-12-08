@@ -14,6 +14,7 @@ function Loans() {
   const { theme, setTheme } = useContext(ThemeContext);
   const [books, setBooks] = useState("");
   const [loans, setLoans] = useState("");
+  const [refresh, setRefresh] = useState(0);
 
   const getAvailBooks = () => {
     axios.get("http://localhost:8080/api/v1/book/available").then((res) => {
@@ -47,6 +48,34 @@ function Loans() {
     getUsersLoans();
   }, []);
 
+  const loanBook = (loan_id) => {
+    axios
+      .get(`http://localhost:8080/api/v1/loan/${loan_id}`, config)
+      .then((res) => {
+        setRefresh(refresh + 1);
+      });
+  };
+
+  const returnLoan = (loan_id) => {
+    axios
+      .delete(`http://localhost:8080/api/v1/loan/${loan_id}`, config)
+      .then((res) => {
+        setRefresh(refresh + 1);
+      });
+  };
+
+  const extendLoan = (loan_id) => {
+    axios
+      .put(`http://localhost:8080/api/v1/loan/extend/${loan_id}`, config)
+      .then((res) => {
+        setRefresh(refresh + 1);
+      });
+  };
+
+  useEffect(() => {
+    getAvailBooks();
+  }, []);
+
   return (
     <div className="App">
       <>
@@ -60,6 +89,7 @@ function Loans() {
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Renewal</th>
+                {auth.role === "ADMIN" && auth.isLoggedIn && <th>Return</th>}
               </tr>
             </thead>
             <tbody>
@@ -70,10 +100,30 @@ function Loans() {
                     <td>{loan.startDate}</td>
                     <td>{loan.endDate}</td>
                     <td>
-                      <Button bg={"success"} variant={"success"} type="submit">
+                      <Button
+                        bg={"success"}
+                        variant={"success"}
+                        onClick={() => {
+                          extendLoan(loan.id);
+                        }}
+                      >
                         Renew
                       </Button>
                     </td>
+                    {auth.role === "ADMIN" && auth.isLoggedIn && (
+                      <td>
+                        <Button
+                          bg={"success"}
+                          variant={"danger"}
+                          onClick={() => {
+                            returnLoan(loan.id);
+                          }}
+                          type="submit"
+                        >
+                          Return
+                        </Button>
+                      </td>
+                    )}
                   </tr>
                 ))}
             </tbody>
@@ -117,7 +167,14 @@ function Loans() {
                     <td>{book.genre}</td>
                     <td>{book.description}</td>
                     <td>
-                      <Button bg={theme} variant={theme} type="submit">
+                      <Button
+                        bg={theme}
+                        variant={theme}
+                        type="submit"
+                        onClick={() => {
+                          loanBook(book.id);
+                        }}
+                      >
                         Loan
                       </Button>
                     </td>
