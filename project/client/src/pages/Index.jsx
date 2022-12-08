@@ -14,6 +14,7 @@ function Index() {
   const [email, setEmail] = useState(0);
   const [password, setPassword] = useState(0);
   const navigate = useNavigate();
+  // Send a auth request to the API to authenticate the user, then log the user in with the response data.
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     const response = await axios
