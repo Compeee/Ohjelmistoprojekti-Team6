@@ -49,7 +49,6 @@ class BookServiceTest {
         book.setDescription("The characteristics of someone or something");
         book.setGenre("Genre");
         book.setId(123L);
-        book.setImage("Image");
         book.setOnloan(true);
         book.setTitle("Dr");
         book.setYr(1);
@@ -60,7 +59,6 @@ class BookServiceTest {
         book1.setDescription("The characteristics of someone or something");
         book1.setGenre("Genre");
         book1.setId(123L);
-        book1.setImage("Image");
         book1.setOnloan(true);
         book1.setTitle("Dr");
         book1.setYr(1);
@@ -76,7 +74,6 @@ class BookServiceTest {
         book.setDescription("The characteristics of someone or something");
         book.setGenre("Genre");
         book.setId(123L);
-        book.setImage("Image");
         book.setOnloan(true);
         book.setTitle("Dr");
         book.setYr(1);

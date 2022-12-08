@@ -27,7 +27,7 @@ class BookRepositoryTest {
 
         BookRepository bookRepository = this.bookRepository;
         String string = "poetry";
-        Book book1 = new Book("book", "Eero", 1999, "great book", "poetry", false, "imglink");
+        Book book1 = new Book("book", "Eero", 1999, "great book", "poetry");
         bookRepository.save(book1);
 
         List<Book> actualFindAllByGenreResult = bookRepository.findAllByGenre(string);
@@ -40,7 +40,7 @@ class BookRepositoryTest {
         BookRepository bookRepository = this.bookRepository;
         String string = "book";
 
-        Book book1 = new Book("book", "Eero", 1999, "great book", "poetry", false, "imglink");
+        Book book1 = new Book("book", "Eero", 1999, "great book", "poetry");
         bookRepository.save(book1);
 
         List<Book> actualFindAllByTitleResult = bookRepository.findAllByTitle(string);
