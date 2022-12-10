@@ -78,6 +78,7 @@ function Loans() {
   };
 
   useEffect(() => {
+    console.log(books);
     getAvailBooks();
   }, [refresh]);
 
