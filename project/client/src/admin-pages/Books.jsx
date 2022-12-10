@@ -23,6 +23,7 @@ function Books() {
     yr: "",
     genre: "",
     description: "",
+    onloan: false,
   });
   var authBasic = window.btoa(auth.email + ":" + auth.password);
   var config = {
