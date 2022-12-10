@@ -24,6 +24,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
+
     @PreAuthorize("permitAll()")
     @GetMapping
     public List<Book> getBooks() {

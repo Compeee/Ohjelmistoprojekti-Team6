@@ -27,7 +27,7 @@ public class Book {
     private String description;
     private String genre;
 
-    private Boolean onloan = false;
+    private Boolean onloan;
 
     public Book(String title, String author, Integer yr, String description, String genre) {
         this.title = title;
@@ -35,6 +35,7 @@ public class Book {
         this.yr = yr;
         this.description = description;
         this.genre = genre;
+        this.onloan = false;
     }
 
 
