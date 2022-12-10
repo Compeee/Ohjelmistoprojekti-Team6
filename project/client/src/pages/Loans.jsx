@@ -15,7 +15,9 @@ function Loans() {
   const [books, setBooks] = useState("");
   const [loans, setLoans] = useState("");
   const [refresh, setRefresh] = useState(0);
+  const [title, setTitle] = useState("");
 
+  //Getting all available books
   const getAvailBooks = () => {
     axios.get("http://localhost:8080/api/v1/book/available").then((res) => {
       setBooks(res.data);
@@ -40,20 +42,10 @@ function Loans() {
       });
   };
 
-  useEffect(() => {
-    getAvailBooks();
-  }, []);
-
-  useEffect(() => {
-    getUsersLoans();
-  }, []);
-
-  const loanBook = (loan_id) => {
-    axios
-      .get(`http://localhost:8080/api/v1/loan/${loan_id}`, config)
-      .then((res) => {
-        setRefresh(refresh + 1);
-      });
+  const loanBook = () => {
+    axios.post(`http://localhost:8080/api/v1/loan/`, config).then((res) => {
+      setRefresh(refresh + 1);
+    });
   };
 
   const returnLoan = (loan_id) => {
@@ -72,9 +64,26 @@ function Loans() {
       });
   };
 
+  let changeTitle = (e) => {
+    setTitle(e.target.value);
+    console.log(title);
+  };
+
+  const getSearchedBook = () => {
+    axios
+      .get(`http://localhost:8080/api/v1/book/search/${title}`)
+      .then((res) => {
+        setBooks(res.data);
+      });
+  };
+
   useEffect(() => {
     getAvailBooks();
-  }, []);
+  }, [refresh]);
+
+  useEffect(() => {
+    getUsersLoans();
+  }, [refresh]);
 
   return (
     <div className="App">
@@ -89,7 +98,7 @@ function Loans() {
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Renewal</th>
-                {auth.role === "ADMIN" && auth.isLoggedIn && <th>Return</th>}
+                <th>Return</th>
               </tr>
             </thead>
             <tbody>
@@ -110,20 +119,19 @@ function Loans() {
                         Renew
                       </Button>
                     </td>
-                    {auth.role === "ADMIN" && auth.isLoggedIn && (
-                      <td>
-                        <Button
-                          bg={"success"}
-                          variant={"danger"}
-                          onClick={() => {
-                            returnLoan(loan.id);
-                          }}
-                          type="submit"
-                        >
-                          Return
-                        </Button>
-                      </td>
-                    )}
+
+                    <td>
+                      <Button
+                        bg={"success"}
+                        variant={"danger"}
+                        onClick={() => {
+                          returnLoan(loan.id);
+                        }}
+                        type="submit"
+                      >
+                        Return
+                      </Button>
+                    </td>
                   </tr>
                 ))}
             </tbody>
@@ -133,15 +141,37 @@ function Loans() {
           </h1>
           {/* Available books search form */}
           <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3">
               <Form.Label>Book search</Form.Label>
-              <Form.Control type="email" placeholder="Enter Search Terms" />
+              <Form.Control
+                placeholder="Enter Search Terms"
+                onChange={changeTitle}
+              />
               <Form.Text className="text-muted">
                 Searching instructions/tips here
               </Form.Text>
             </Form.Group>
-            <Button bg={theme} variant={theme} type="submit">
+            <Button
+              bg={theme}
+              variant={theme}
+              type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                getSearchedBook();
+              }}
+            >
               Search
+            </Button>
+            <Button
+              bg={theme}
+              variant={theme}
+              type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                getAvailBooks();
+              }}
+            >
+              Available Books
             </Button>
           </Form>
           <p> </p>
