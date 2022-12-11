@@ -9,6 +9,10 @@ import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import { AuthContext } from "../context/AuthContext";
 
+let local = "http://localhost:8080/api/v1/book";
+let api =
+  "http://ec2-13-50-112-65.eu-north-1.compute.amazonaws.com:8080/eLibrary-spring-boot/api/v1/book";
+
 function Books() {
   const auth = useContext(AuthContext);
   const { theme, setTheme } = useContext(ThemeContext);
@@ -23,7 +27,6 @@ function Books() {
     yr: "",
     genre: "",
     description: "",
-    onloan: false,
   });
   var authBasic = window.btoa(auth.email + ":" + auth.password);
   var config = {
@@ -34,27 +37,32 @@ function Books() {
 
   // Getting books data
   const getBooks = () => {
-    axios.get("http://localhost:8080/api/v1/book").then((res) => {
+    axios.get(local).then((res) => {
+      setBooks(res.data);
+    });
+    axios.get(api).then((res) => {
       setBooks(res.data);
     });
   };
 
   // Adding a book
   const postBook = () => {
-    axios
-      .post("http://localhost:8080/api/v1/book", newBook, config)
-      .then((res) => {
-        setRefresh(refresh + 1);
-      });
+    axios.post(local, newBook, config).then((res) => {
+      setRefresh(refresh + 1);
+    });
+    axios.post(api, newBook, config).then((res) => {
+      setRefresh(refresh + 1);
+    });
   };
 
   // Deleting a book
   const deleteBook = (bookId) => {
-    axios
-      .delete(`http://localhost:8080/api/v1/book/${bookId}`, config)
-      .then((res) => {
-        setRefresh(refresh + 1);
-      });
+    axios.delete(`${local}${bookId}`, config).then((res) => {
+      setRefresh(refresh + 1);
+    });
+    axios.delete(`${api}${bookId}`, config).then((res) => {
+      setRefresh(refresh + 1);
+    });
   };
 
   // Updating book values
