@@ -8,24 +8,78 @@ import axios from "axios";
 import { ThemeContext } from "../context/ThemeContext";
 import { AuthContext } from "../context/AuthContext";
 
+let local = "http://localhost:8080/api/v1/auth";
+let api =
+  "http://ec2-13-50-112-65.eu-north-1.compute.amazonaws.com:8080/eLibrary-spring-boot/api/v1/auth";
+
 function Index() {
   const { theme, setTheme } = useContext(ThemeContext);
   const auth = useContext(AuthContext);
   const [email, setEmail] = useState(0);
   const [password, setPassword] = useState(0);
   const navigate = useNavigate();
-  // Send a auth request to the API to authenticate the user, then log the user in with the response data.
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     const response = await axios
       .post(
-        "http://localhost:8080/api/v1/auth",
+        api,
         { username: email, password: password },
         { "Content-Type": "application/json" }
       )
       .then((res) => {
         auth.login(password, res.data.email, res.data.role, res.data.id);
         navigate("/loans");
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Unknown Error", error.message);
+        }
+        console.log(error.config);
+      });
+    const response2 = await axios
+      .post(
+        local,
+        { username: email, password: password },
+        { "Content-Type": "application/json" }
+      )
+      .then((response2) => {
+        auth.login(
+          password,
+          response2.data.email,
+          response2.data.role,
+          response2.data.id
+        );
+        navigate("/loans");
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Unknown Error", error.message);
+        }
+        console.log(error.config);
       });
   };
 

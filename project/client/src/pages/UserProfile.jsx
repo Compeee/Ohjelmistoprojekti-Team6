@@ -8,6 +8,10 @@ import Modal from "react-bootstrap/Modal";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+let local = "http://localhost:8080/api/v1/user/";
+let api =
+  "http://ec2-13-50-112-65.eu-north-1.compute.amazonaws.com:8080/eLibrary-spring-boot/api/v1/user/";
+
 export default function UserProfile() {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
@@ -40,18 +44,86 @@ export default function UserProfile() {
     }
 
     if (match) {
-      axios.patch(
-        `http://localhost:8080/api/v1/user/${auth.userId}`,
-        obj,
-        config
-      );
+      axios
+        .patch(`${local}${auth.userId}`, obj, config)
+        .catch(function (error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Unknown Error", error.message);
+          }
+          console.log(error.config);
+        });
+      axios.patch(`${api}${auth.userId}`, obj, config).catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Unknown Error", error.message);
+        }
+        console.log(error.config);
+      });
       navigate("/");
       auth.logout();
     }
   };
 
   const closeAccount = () => {
-    axios.delete(`http://localhost:8080/api/v1/user/${auth.userId}`, config);
+    axios.delete(`${local}${auth.userId}`, config).catch(function (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log("Unknown Error", error.message);
+      }
+      console.log(error.config);
+    });
+    axios.delete(`${api}${auth.userId}`, config).catch(function (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log("Unknown Error", error.message);
+      }
+      console.log(error.config);
+    });
     navigate("/");
     auth.logout();
   };

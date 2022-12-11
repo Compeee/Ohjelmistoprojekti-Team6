@@ -8,6 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
 import axios from "axios";
 
+let local = "http://localhost:8080/api/v1/register";
+let api =
+  "http://ec2-13-50-112-65.eu-north-1.compute.amazonaws.com:8080/eLibrary-spring-boot/api/v1/register";
+
 export function Register() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -17,11 +21,55 @@ export function Register() {
     event.preventDefault();
     const response = await axios
       .post(
-        "http://localhost:8080/api/v1/register",
+        api,
         { username: username, password: password, email: email },
         { "Content-Type": "application/json" }
       )
-      .then((res) => navigate("/"));
+      .then((res) => navigate("/"))
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(response.username + " " + response.password);
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Unknown Error", error.message);
+        }
+        console.log(error.config);
+      });
+    const response2 = await axios
+      .post(
+        local,
+        { username: username, password: password, email: email },
+        { "Content-Type": "application/json" }
+      )
+      .then((response2) => navigate("/"))
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Unknown Error", error.message);
+        }
+        console.log(error.config);
+      });
   };
   const { theme, setTheme } = useContext(ThemeContext);
   return (

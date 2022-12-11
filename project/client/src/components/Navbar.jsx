@@ -92,7 +92,11 @@ export default function NavigationBar() {
           {/* Checks auth login for displaying profile navigation link*/}
           {auth.isLoggedIn && (
             <Nav.Item>
-              <Nav.Link as={NavLink} to="/profile">
+              <Nav.Link
+                as={NavLink}
+                to="/profile"
+                style={{ padding: "3px", color: "blue" }}
+              >
                 Profile
               </Nav.Link>
             </Nav.Item>
@@ -101,6 +105,7 @@ export default function NavigationBar() {
           {auth.isLoggedIn && (
             <Nav>
               <Button
+                style={{ padding: "5px" }}
                 variant="danger"
                 onClick={() => {
                   auth.logout();

@@ -9,20 +9,66 @@ import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import { AuthContext } from "../context/AuthContext.js";
 
+let local = "http://localhost:8080/api/v1/book/available";
+let local2 = "http://localhost:8080/api/v1/loan/byUser/";
+let api1 =
+  "http://ec2-13-50-112-65.eu-north-1.compute.amazonaws.com:8080/eLibrary-spring-boot/api/v1/book/available";
+let api2 =
+  "http://ec2-13-50-112-65.eu-north-1.compute.amazonaws.com:8080/eLibrary-spring-boot/api/v1/loan/byUser/";
+
 function Loans() {
   const auth = useContext(AuthContext);
   const { theme, setTheme } = useContext(ThemeContext);
   const [books, setBooks] = useState("");
   const [loans, setLoans] = useState("");
-  const [refresh, setRefresh] = useState(0);
-  const [title, setTitle] = useState("");
 
-  //Getting all available books
   const getAvailBooks = () => {
-    axios.get("http://localhost:8080/api/v1/book/available").then((res) => {
-      setBooks(res.data);
-    });
-    console.log(books);
+    axios
+      .get(api1)
+      .then((res) => {
+        setBooks(res.data);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Unknown Error", error.message);
+        }
+        console.log(error.config);
+      });
+    axios
+      .get(local)
+      .then((res) => {
+        setBooks(res.data);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Unknown Error", error.message);
+        }
+        console.log(error.config);
+      });
   };
 
   var authBasic = window.btoa(auth.email + ":" + auth.password);
@@ -35,56 +81,62 @@ function Loans() {
   // Getting users loans data
   const getUsersLoans = () => {
     axios
-      .get(`http://localhost:8080/api/v1/loan/byUser/${auth.userId}`, config)
+      .get(`${local2}${auth.userId}`, config)
       .then((res) => {
         setLoans(res.data);
         console.log(res.data);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Unknown Error", error.message);
+        }
+        console.log(error.config);
       });
-  };
-
-  const loanBook = () => {
-    axios.post(`http://localhost:8080/api/v1/loan/`, config).then((res) => {
-      setRefresh(refresh + 1);
-    });
-  };
-
-  const returnLoan = (loan_id) => {
     axios
-      .delete(`http://localhost:8080/api/v1/loan/${loan_id}`, config)
+      .get(`${api2}${auth.userId}`, config)
       .then((res) => {
-        setRefresh(refresh + 1);
-      });
-  };
-
-  const extendLoan = (loan_id) => {
-    axios
-      .put(`http://localhost:8080/api/v1/loan/extend/${loan_id}`, config)
-      .then((res) => {
-        setRefresh(refresh + 1);
-      });
-  };
-
-  let changeTitle = (e) => {
-    setTitle(e.target.value);
-    console.log(title);
-  };
-
-  const getSearchedBook = () => {
-    axios
-      .get(`http://localhost:8080/api/v1/book/search/${title}`)
-      .then((res) => {
-        setBooks(res.data);
+        setLoans(res.data);
+        console.log(res.data);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Unknown Error", error.message);
+        }
+        console.log(error.config);
       });
   };
 
   useEffect(() => {
-    console.log(books);
     getAvailBooks();
-  }, [refresh]);
+  }, []);
 
   useEffect(() => {
     getUsersLoans();
-  }, [refresh]);
+  }, []);
 
   return (
     <div className="App">
@@ -99,7 +151,6 @@ function Loans() {
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Renewal</th>
-                <th>Return</th>
               </tr>
             </thead>
             <tbody>
@@ -110,27 +161,8 @@ function Loans() {
                     <td>{loan.startDate}</td>
                     <td>{loan.endDate}</td>
                     <td>
-                      <Button
-                        bg={"success"}
-                        variant={"success"}
-                        onClick={() => {
-                          extendLoan(loan.id);
-                        }}
-                      >
+                      <Button bg={"success"} variant={"success"} type="submit">
                         Renew
-                      </Button>
-                    </td>
-
-                    <td>
-                      <Button
-                        bg={"success"}
-                        variant={"danger"}
-                        onClick={() => {
-                          returnLoan(loan.id);
-                        }}
-                        type="submit"
-                      >
-                        Return
                       </Button>
                     </td>
                   </tr>
@@ -142,37 +174,15 @@ function Loans() {
           </h1>
           {/* Available books search form */}
           <Form>
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Book search</Form.Label>
-              <Form.Control
-                placeholder="Enter Search Terms"
-                onChange={changeTitle}
-              />
+              <Form.Control type="email" placeholder="Enter Search Terms" />
               <Form.Text className="text-muted">
                 Searching instructions/tips here
               </Form.Text>
             </Form.Group>
-            <Button
-              bg={theme}
-              variant={theme}
-              type="submit"
-              onClick={(e) => {
-                e.preventDefault();
-                getSearchedBook();
-              }}
-            >
+            <Button bg={theme} variant={theme} type="submit">
               Search
-            </Button>
-            <Button
-              bg={theme}
-              variant={theme}
-              type="submit"
-              onClick={(e) => {
-                e.preventDefault();
-                getAvailBooks();
-              }}
-            >
-              Available Books
             </Button>
           </Form>
           <p> </p>
@@ -198,14 +208,7 @@ function Loans() {
                     <td>{book.genre}</td>
                     <td>{book.description}</td>
                     <td>
-                      <Button
-                        bg={theme}
-                        variant={theme}
-                        type="submit"
-                        onClick={() => {
-                          loanBook(book.id);
-                        }}
-                      >
+                      <Button bg={"success"} variant={"success"} type="submit">
                         Loan
                       </Button>
                     </td>

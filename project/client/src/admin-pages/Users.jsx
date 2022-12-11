@@ -9,6 +9,10 @@ import { ThemeContext } from "../context/ThemeContext";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
+let local = "http://localhost:8080/api/v1/user";
+let api =
+  "http://ec2-13-50-112-65.eu-north-1.compute.amazonaws.com:8080/eLibrary-spring-boot/api/v1/user";
+
 function Users() {
   const { theme, setTheme } = useContext(ThemeContext);
   const [users, setUsers] = useState(0);
@@ -22,7 +26,10 @@ function Users() {
 
   // Getting the users data
   const getUsers = () => {
-    axios.get("http://localhost:8080/api/v1/user", config).then((res) => {
+    axios.get(local, config).then((res) => {
+      setUsers(res.data);
+    });
+    axios.get(api, config).then((res) => {
       setUsers(res.data);
     });
   };
