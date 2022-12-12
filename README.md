@@ -43,6 +43,12 @@ $ You might have to right click pom.xml -> maven -> reload project if ur getting
 $ cd client 
 $ npm install
 $ npm start
+
+Accounts for testing:
+User email | User password | User role
+jaska@tuni.fi | password2 | Admin
+eero@tuni.fi | password1 | User (Has loans ready)
+
 ```
 ### 3. Run backend tests
 ```
