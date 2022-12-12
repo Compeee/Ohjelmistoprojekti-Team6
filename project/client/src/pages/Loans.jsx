@@ -440,8 +440,7 @@ function Loans() {
               </Form.Text>
             </Form.Group>
             <Button
-              bg={theme}
-              variant={theme}
+              variant="primary"
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
@@ -451,8 +450,7 @@ function Loans() {
               Search
             </Button>
             <Button
-              bg={theme}
-              variant={theme}
+              variant="primary"
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
@@ -486,8 +484,7 @@ function Loans() {
                     <td>{book.description}</td>
                     <td>
                       <Button
-                        bg={theme}
-                        variant={theme}
+                        variant="primary"
                         type="submit"
                         onClick={() => {
                           loanBook(book.id, book.title);
