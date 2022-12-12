@@ -30,7 +30,7 @@ $ cd project
 $ docker-compose up -d
 ```
 
-### 3. Run backend
+### 3. Run your own backend (Our AWS backend is not functioning correctly)
 ```
 $ cd server 
 $ cd src/main/java/com/example/libraryapp
